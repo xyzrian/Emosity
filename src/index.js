@@ -1,39 +1,23 @@
-import Phaser from 'phaser';
-import logoImg from './assets/logo.png';
+import Phaser from 'phaser'
+import Boot from './scenes/boot'
+import Game from './scenes/game'
 
-class MyGame extends Phaser.Scene
-{
-    constructor ()
-    {
-        super();
-    }
-
-    preload ()
-    {
-        this.load.image('logo', logoImg);
-    }
-      
-    create ()
-    {
-        const logo = this.add.image(400, 150, 'logo');
-      
-        this.tweens.add({
-            targets: logo,
-            y: 450,
-            duration: 2000,
-            ease: "Power2",
-            yoyo: true,
-            loop: -1
-        });
-    }
-}
+var scaleRatio = window.devicePixelRatio / 3; //load in assets, scale with myAsset.scale.setTo(scaleRatio, scaleRatio);
 
 const config = {
+    title: "Emosity",
+    version: "0.0.1",
     type: Phaser.AUTO,
-    parent: 'phaser-example',
-    width: 800,
-    height: 600,
-    scene: MyGame
+    width: window.innerWidth * window.devicePixelRatio,
+    height: window.innerHeight * window.devicePixelRatio,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y:400 },
+            debug: false
+        }
+    },
+    scene: [Boot, Game]
 };
 
 const game = new Phaser.Game(config);
