@@ -8,8 +8,10 @@ const config = {
     title: "Emosity",
     version: "0.0.1",
     type: Phaser.AUTO,
-    width: window.innerWidth * window.devicePixelRatio,
-    height: window.innerHeight * window.devicePixelRatio,
+    // width: window.innerWidth * window.devicePixelRatio,
+    // height: window.innerHeight * window.devicePixelRatio,
+    width: 480,
+    height: 270,
     physics: {
         default: 'arcade',
         arcade: {
