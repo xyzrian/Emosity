@@ -1,6 +1,8 @@
 import Phaser from 'phaser'
 
-var scaleRatio = window.devicePixelRatio / 3;
+var windowWidth = window.innerWidth;
+var windowHeight = window.innerHeight;
+// var scaleRatio = window.devicePixelRatio / 3;
 var ground;
 
 export default class Game extends Phaser.Scene {
@@ -12,7 +14,7 @@ export default class Game extends Phaser.Scene {
     {
         this.load.image('sky', 'src/assets/sky.png');
         this.load.image('ground', 'src/assets/ground.png');
-        // this.load.spritesheet('dude', 'src/games/firstgame/assets/dude.png', { frameWidth: 32, frameHeight: 48 }); player spritesheet
+        this.load.spritesheet('player1spritesheet', 'src/games/firstgame/assets/player1spritesheet.png', { frameWidth: 80, frameHeight: 80 }); 
         this.load.image('player1', 'src/assets/player1.png');
         this.load.image('cloud1', 'src/assets/cloud1.png');
         this.load.image('cloud2', 'src/assets/cloud2.png');
@@ -21,10 +23,22 @@ export default class Game extends Phaser.Scene {
       
     create ()
     {
-        this.add.image(0, 0, 'sky').setOrigin(0, 0);
-        this.add.image()
+        this.add.image(windowWidth/2, windowHeight/2, 'sky').setDisplaySize(windowWidth, windowHeight);
+        // this.add.image()
         
-        // ground = this.physics.add.staticGroup();
-        // ground.create(60, 300, 'ground').scaleRatio();
+        ground = this.physics.add.staticGroup();
+        ground.create(0, windowHeight, 'ground'); // fix this !!!!!!!!!!!
+        this.scale.on('resize', resize, this);
+    }
+
+    resize (gameSize, baseSize, displaySize, resolution)
+    {
+        var width = gameSize.width;
+        var height = gameSize.height;
+
+        this.cameras.resize(width, height);
+
+        sky.setSize(width, height);
+        // this.logo.setPosition(width / 2, height / 2);
     }
 }
