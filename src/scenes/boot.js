@@ -1,5 +1,8 @@
 import Phaser from 'phaser'
 
+var windowWidth = window.innerWidth;
+var windowHeight = window.innerHeight;
+
 export default class Boot extends Phaser.Scene {
     constructor() {
         super('Boot');
@@ -7,7 +10,7 @@ export default class Boot extends Phaser.Scene {
 
     preload ()
     {
-        const loadingMessage = this.add.text(400, 150, 'LOADING.....');
+        const loadingMessage = this.add.text(windowWidth/2, windowHeight/2, 'LOADING.....');
         // var progressBar = this.add.graphics();
         // var progressBox = this.add.graphics();
         // progressBox.fillStyle(0x222222, 0.8);
@@ -30,10 +33,11 @@ export default class Boot extends Phaser.Scene {
       
     create ()
     {
-        const loadingScreen = this.add.text(400, 150, 'THE GAME HAS LOADED. CLICK TO CONTINUE.');
+        const loadingScreen = this.add.text(windowWidth/2, windowHeight/2, 'THE GAME HAS LOADED. CLICK TO CONTINUE.');
 
         this.input.on('pointerdown', function() {
             this.scene.start('Game');
         }, this);
     }
+
 }
