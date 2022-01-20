@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 
-var windowWidth = window.innerWidth;
-var windowHeight = window.innerHeight;
+var windowWidth = 480;
+var windowHeight = 270;
 
 export default class Boot extends Phaser.Scene {
     constructor() {
@@ -24,11 +24,12 @@ export default class Boot extends Phaser.Scene {
             loadingMessage.destroy();
         });
 
-        this.load.image('logo', 'src/assets/logo.png');
-        this.load.image('dude', 'src/assets/dude.png');
-        this.load.image('platform', 'src/assets/platform.png');
         this.load.image('sky', 'src/assets/sky.png');
-        this.load.image('star', 'src/assets/star.png');
+        this.load.image('ground', 'src/assets/ground.png');
+        this.load.spritesheet('player', 'src/assets/player1spritesheet.png', { frameWidth: 80, frameHeight: 80 }); 
+        this.load.image('cloud1', 'src/assets/cloud1.png');
+        this.load.image('cloud2', 'src/assets/cloud2.png');
+        this.load.image('cloud3', 'src/assets/cloud3.png');
     }
       
     create ()
