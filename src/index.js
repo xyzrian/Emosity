@@ -7,14 +7,16 @@ import Game from './scenes/game'
 const config = {
     title: "Emosity",
     version: "0.0.1",
-    parent: "phaser-game",
     type: Phaser.AUTO,
-    width: window.innerWidth * window.devicePixelRatio,
-    height: window.innerHeight * window.devicePixelRatio,
-    // width: 480,
-    // height: 270,
+    pixelArt: true,
+    // width: window.innerWidth * window.devicePixelRatio,
+    // height: window.innerHeight * window.devicePixelRatio,
     scale: {
-        mode: Phaser.Scale.RESIZE,
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        parent: "phaser-game",
+        width: 480,
+        height: 270,
     },
     physics: {
         default: 'arcade',
