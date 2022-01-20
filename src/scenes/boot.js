@@ -10,7 +10,8 @@ export default class Boot extends Phaser.Scene {
 
     preload ()
     {
-        const loadingMessage = this.add.text(windowWidth/2, windowHeight/2, 'LOADING.....');
+        // this.load.bitmapFont('minecraftRegular', 'src/assets/MinecraftRegular.json');
+        const loadingMessage = this.add.text(windowWidth/2, windowHeight/2, 'LOADING.....').setOrigin(0.5, 0.5);
         // var progressBar = this.add.graphics();
         // var progressBox = this.add.graphics();
         // progressBox.fillStyle(0x222222, 0.8);
@@ -34,7 +35,8 @@ export default class Boot extends Phaser.Scene {
       
     create ()
     {
-        const loadingScreen = this.add.text(windowWidth/2, windowHeight/2, 'THE GAME HAS LOADED. CLICK TO CONTINUE.');
+        // const loadingScreen = this.add.bitmapText(windowWidth/2, windowHeight/2, 'minecraftRegular', 'THE GAME HAS LOADED. CLICK TO CONTINUE.').setOrigin(0.5, 0.5);
+        const loadingScreen = this.add.text(windowWidth/2, windowHeight/2, 'THE GAME HAS LOADED. CLICK TO CONTINUE.').setOrigin(0.5, 0.5);
 
         this.input.on('pointerdown', function() {
             this.scene.start('Game');
