@@ -10,7 +10,6 @@ export default class Boot extends Phaser.Scene {
 
     preload ()
     {
-        // this.load.bitmapFont('minecraftRegular', 'src/assets/MinecraftRegular.json');
         const loadingMessage = this.add.text(windowWidth/2, windowHeight/2, 'LOADING.....').setOrigin(0.5, 0.5);
         // var progressBar = this.add.graphics();
         // var progressBox = this.add.graphics();
@@ -25,12 +24,13 @@ export default class Boot extends Phaser.Scene {
             loadingMessage.destroy();
         });
 
+        // this.load.bitmapFont('minecraftRegular', 'src/assets/MinecraftRegular.png', 'src/assets/MinecraftRegular.xml');
         this.load.image('sky', 'src/assets/sky.png');
         this.load.image('ground', 'src/assets/ground.png');
-        this.load.spritesheet('player', 'src/assets/player1spritesheet.png', { frameWidth: 80, frameHeight: 80 }); 
-        this.load.image('cloud1', 'src/assets/cloud1.png');
-        this.load.image('cloud2', 'src/assets/cloud2.png');
-        this.load.image('cloud3', 'src/assets/cloud3.png');
+        this.load.spritesheet('player', 'src/assets/additionalframetest.png', { frameWidth: 54, frameHeight: 76 }); 
+        this.load.image('cloudsLarge', 'src/assets/cloudsLarge.png');
+        this.load.image('cloudsMedium', 'src/assets/cloudsMedium.png');
+        this.load.image('cloudsSmall', 'src/assets/cloudsSmall.png');
     }
       
     create ()
