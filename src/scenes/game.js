@@ -8,6 +8,9 @@ var space;
 var esc;
 var player;
 var ground;
+var cloudsSmall;
+var cloudsMedium;
+var cloudsLarge;
 
 export default class Game extends Phaser.Scene {
     constructor() {
@@ -16,17 +19,15 @@ export default class Game extends Phaser.Scene {
 
     preload ()
     {
-        this.load.image('sky', 'src/assets/sky.png');
-        this.load.image('ground', 'src/assets/ground.png');
-        this.load.spritesheet('player', 'src/assets/player1spritesheet.png', { frameWidth: 80, frameHeight: 80 }); 
-        this.load.image('cloud1', 'src/assets/cloud1.png');
-        this.load.image('cloud2', 'src/assets/cloud2.png');
-        this.load.image('cloud3', 'src/assets/cloud3.png');
+
     }
       
     create ()
     {
         this.add.image(windowWidth/2, windowHeight/2, 'sky').setDisplaySize(windowWidth, windowHeight);
+        cloudsSmall = this.add.tileSprite(240, 135, 480, 270, "cloudsSmall");
+        cloudsMedium = this.add.tileSprite(240, 135, 480, 270, "cloudsMedium");
+        cloudsLarge = this.add.tileSprite(240, 135, 480, 270, "cloudsLarge");
         
         ground = this.physics.add.staticGroup();
         ground.create(windowWidth, windowHeight, 'ground').setOrigin(1, 1).setPosition(windowWidth, windowHeight).refreshBody(); 
@@ -43,24 +44,36 @@ export default class Game extends Phaser.Scene {
 
         this.anims.create({
             key: 'left',
-            frames: this.anims.generateFrameNumbers('player', {start: 0, end: 1}),
+            frames: this.anims.generateFrameNumbers('player', {start: 0, end: 2}),
+            frameRate: 7,
+            repeat: -1,
+            yoyo: true
+        });
+
+        this.anims.create({
+            key: 'right',
+            frames: this.anims.generateFrameNumbers('player', {start: 4, end: 5}),
             frameRate: 10,
             repeat: -1
         });
 
         this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('player', {start: 2, end: 3}),
-            frameRate: 10,
-            repeat: -1
+            key: 'default',
+            frames: [{key: 'player', frame: 3}],
+            frameRate: 10
         });
+
     }
 
     update ()
     {
+        cloudsSmall.tilePositionX += 0.25;
+        cloudsMedium.tilePositionX += 0.2;
+        cloudsLarge.tilePositionX += 0.1;
+
         if(cursors.left.isDown)
         {
-            player.setVelocityX(-160);
+            player.setVelocityX(-120);
             player.anims.play('left', true);
         }
         else if(cursors.right.isDown)
@@ -71,7 +84,7 @@ export default class Game extends Phaser.Scene {
         else
         {
             player.setVelocityX(0);
-            player.anims.play(false);
+            player.anims.play('default', true);
         }
 
         if(cursors.up.isDown && player.body.touching.down)
@@ -82,3 +95,4 @@ export default class Game extends Phaser.Scene {
         this.physics.add.collider(player, ground);
     }
 }
+
