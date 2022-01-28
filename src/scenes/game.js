@@ -24,19 +24,31 @@ export default class Game extends Phaser.Scene {
       
     create ()
     {
-        this.add.image(windowWidth/2, windowHeight/2, 'sky').setDisplaySize(windowWidth, windowHeight);
-        cloudsSmall = this.add.tileSprite(240, 135, 480, 270, "cloudsSmall");
-        cloudsMedium = this.add.tileSprite(240, 135, 480, 270, "cloudsMedium");
-        cloudsLarge = this.add.tileSprite(240, 135, 480, 270, "cloudsLarge");
+        this.physics.world.setBounds(0, 0, 1000, 270, true, false, true, true);  //only right bound is off
+
+        this.add.tileSprite(0, windowHeight, 1000, windowHeight,'sky').setOrigin(0, 1);
+        // this.add.image(windowWidth/2, windowHeight/2, 'sky').setDisplaySize(windowWidth, windowHeight);
+
+        cloudsSmall = this.add.tileSprite(0, windowHeight, 1000, windowHeight, "cloudsSmall").setOrigin(0, 1);
+        cloudsMedium = this.add.tileSprite(0, windowHeight, 1000, windowHeight, "cloudsMedium").setOrigin(0, 1);
+        cloudsLarge = this.add.tileSprite(0, windowHeight, 1000, windowHeight, "cloudsLarge").setOrigin(0, 1);
+        // cloudsSmall = this.add.tileSprite(240, 135, 480, 270, "cloudsSmall");
+        // cloudsMedium = this.add.tileSprite(240, 135, 480, 270, "cloudsMedium");
+        // cloudsLarge = this.add.tileSprite(240, 135, 480, 270, "cloudsLarge");
         
-        ground = this.physics.add.staticGroup();
-        ground.create(windowWidth, windowHeight, 'ground').setOrigin(1, 1).setPosition(windowWidth, windowHeight).refreshBody(); 
+        ground = this.add.tileSprite(0, windowHeight, 1000, 59, 'ground').setOrigin(0, 1);
+        this.physics.add.existing(ground, true);
+        // ground = this.physics.add.staticGroup();
+        // ground.create(windowWidth, windowHeight, 'ground').setOrigin(1, 1).refreshBody(); 
         
-        player = this.physics.add.sprite(80, 80, 'player');
+        player = this.physics.add.sprite(windowWidth/2, windowHeight/2, 'player');
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
 
         this.physics.add.collider(player, ground);
+
+        this.cameras.main.setBounds(0, 0, 1000, windowHeight);
+        this.cameras.main.startFollow(player);
 
         cursors = this.input.keyboard.createCursorKeys();
         // esc = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
