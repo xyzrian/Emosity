@@ -1,13 +1,17 @@
 import Phaser from 'phaser'
+import Player from './player.js'
 
 var windowWidth = 480;
 var windowHeight = 270;
-// var scaleRatio = window.devicePixelRatio / 3;
-var cursors;
+var gameWidth = 1024;
+var gameHeight = 1024;
+// var cursors;
 var space;
 var esc;
 var player;
-var ground;
+var map;
+var tileset;
+var platforms;
 var cloudsSmall;
 var cloudsMedium;
 var cloudsLarge;
@@ -24,87 +28,46 @@ export default class Game extends Phaser.Scene {
       
     create ()
     {
-        this.physics.world.setBounds(0, 0, 1000, 270, true, false, true, true);  //only right bound is off
+        //World bounds
+        this.physics.world.setBounds(0, 0, gameWidth, gameHeight, true, false, false, true);  // left/right/top/bottom
 
-        this.add.tileSprite(0, windowHeight, 1000, windowHeight,'sky').setOrigin(0, 1);
-        // this.add.image(windowWidth/2, windowHeight/2, 'sky').setDisplaySize(windowWidth, windowHeight);
+        //Sky & clouds
+        this.add.tileSprite(0, gameHeight, gameWidth, gameHeight,'sky').setOrigin(0, 1);
+        cloudsSmall = this.add.tileSprite(0, gameHeight, gameWidth, gameHeight, "cloudsSmall").setOrigin(0, 1);
+        cloudsMedium = this.add.tileSprite(0, gameHeight, gameWidth, gameHeight, "cloudsMedium").setOrigin(0, 1);
+        cloudsLarge = this.add.tileSprite(0, gameHeight, gameWidth, gameHeight, "cloudsLarge").setOrigin(0, 1);
+        
+        //Tileset platforms
+        map = this.make.tilemap({key: 'map'}); //JSON import name
+        tileset = map.addTilesetImage('grassdirt', 'tiles'); //Tiled tileset name, png import name
+        platforms = map.createLayer("platforms", tileset, 0, 0); //Tiled layer name
+        // platforms = map.createLayer("platforms", tileset, 0, windowHeight).setOrigin(0, 1); //Tiled layer name
+        // platforms.setOrigin(1, 1).setPosition(0, windowHeight);
+        platforms.setCollisionBetween(1, 25); //start and stop tiles
 
-        cloudsSmall = this.add.tileSprite(0, windowHeight, 1000, windowHeight, "cloudsSmall").setOrigin(0, 1);
-        cloudsMedium = this.add.tileSprite(0, windowHeight, 1000, windowHeight, "cloudsMedium").setOrigin(0, 1);
-        cloudsLarge = this.add.tileSprite(0, windowHeight, 1000, windowHeight, "cloudsLarge").setOrigin(0, 1);
-        // cloudsSmall = this.add.tileSprite(240, 135, 480, 270, "cloudsSmall");
-        // cloudsMedium = this.add.tileSprite(240, 135, 480, 270, "cloudsMedium");
-        // cloudsLarge = this.add.tileSprite(240, 135, 480, 270, "cloudsLarge");
-        
-        ground = this.add.tileSprite(0, windowHeight, 1000, 59, 'ground').setOrigin(0, 1);
-        this.physics.add.existing(ground, true);
-        // ground = this.physics.add.staticGroup();
-        // ground.create(windowWidth, windowHeight, 'ground').setOrigin(1, 1).refreshBody(); 
-        
-        player = this.physics.add.sprite(windowWidth/2, windowHeight/2, 'player');
+        //Player instantiation
+        player = this.physics.add.existing(new Player(this, 20, gameHeight-100, 'player'));
+        player.setBodySize(player.width*0.5, player.height*0.9);
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
+        this.physics.add.collider(player, platforms);  
 
-        this.physics.add.collider(player, ground);
-
-        this.cameras.main.setBounds(0, 0, 1000, windowHeight);
+        //Camera instantiation
+        this.cameras.main.setBounds(0, 0, gameWidth, gameHeight);
         this.cameras.main.startFollow(player);
 
-        cursors = this.input.keyboard.createCursorKeys();
+        // cursors = this.input.keyboard.createCursorKeys();
         // esc = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
         // space = this.input.keyboard.addKey(Phaser.Keyboard.SPACE);
-
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('player', {start: 0, end: 2}),
-            frameRate: 7,
-            repeat: -1,
-            yoyo: true
-        });
-
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('player', {start: 4, end: 5}),
-            frameRate: 10,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: 'default',
-            frames: [{key: 'player', frame: 3}],
-            frameRate: 10
-        });
 
     }
 
     update ()
     {
+        //Cloud animation
         cloudsSmall.tilePositionX += 0.25;
         cloudsMedium.tilePositionX += 0.2;
         cloudsLarge.tilePositionX += 0.1;
-
-        if(cursors.left.isDown)
-        {
-            player.setVelocityX(-120);
-            player.anims.play('left', true);
-        }
-        else if(cursors.right.isDown)
-        {
-            player.setVelocityX(160);
-            player.anims.play('right', true);
-        }
-        else
-        {
-            player.setVelocityX(0);
-            player.anims.play('default', true);
-        }
-
-        if(cursors.up.isDown && player.body.touching.down)
-        {
-            player.setVelocityY(-150);
-        }
-
-        this.physics.add.collider(player, ground);
     }
 }
 
