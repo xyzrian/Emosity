@@ -23,8 +23,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.anims.create({
             key: 'right',
-            frames: this.anims.generateFrameNumbers('player', {start: 4, end: 5}),
-            frameRate: 10,
+            frames: this.anims.generateFrameNumbers('player', {start: 4, end: 6}),
+            frameRate: 7,
             repeat: -1
         });
 
@@ -53,7 +53,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
         else if(cursors.right.isDown)
         {
-            this.setVelocityX(160);
+            this.setVelocityX(120);
             this.anims.play('right', true);
         }
         else

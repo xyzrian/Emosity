@@ -27,7 +27,7 @@ export default class Boot extends Phaser.Scene {
         // this.load.bitmapFont('minecraftRegular', 'src/assets/MinecraftRegular.png', 'src/assets/MinecraftRegular.xml');
         this.load.image('sky', 'src/assets/sky.png');
         this.load.image('ground', 'src/assets/ground.png');
-        this.load.spritesheet('player', 'src/assets/additionalframenosword.png', { frameWidth: 54, frameHeight: 76 }); 
+        this.load.spritesheet('player', 'src/assets/player1.png', { frameWidth: 42, frameHeight: 76 }); 
         this.load.image('cloudsLarge', 'src/assets/cloudsLarge.png');
         this.load.image('cloudsMedium', 'src/assets/cloudsMedium.png');
         this.load.image('cloudsSmall', 'src/assets/cloudsSmall.png');
