@@ -3,8 +3,8 @@ import Player from './player.js'
 
 var windowWidth = 480;
 var windowHeight = 270;
-var gameWidth = 1024;
-var gameHeight = 1024;
+var gameWidth = 1568;
+var gameHeight = 320;
 // var cursors;
 var space;
 var esc;
@@ -39,14 +39,14 @@ export default class Game extends Phaser.Scene {
         
         //Tileset platforms
         map = this.make.tilemap({key: 'map'}); //JSON import name
-        tileset = map.addTilesetImage('grassdirt', 'tiles'); //Tiled tileset name, png import name
+        tileset = map.addTilesetImage('grasstileset', 'tiles'); //Tiled tileset name, png import name
         platforms = map.createLayer("platforms", tileset, 0, 0); //Tiled layer name
         // platforms = map.createLayer("platforms", tileset, 0, windowHeight).setOrigin(0, 1); //Tiled layer name
         // platforms.setOrigin(1, 1).setPosition(0, windowHeight);
         platforms.setCollisionBetween(1, 25); //start and stop tiles
 
         //Player instantiation
-        player = this.physics.add.existing(new Player(this, 20, gameHeight-100, 'player'));
+        player = this.physics.add.existing(new Player(this, 20, gameHeight-120, 'player'));
         player.setBodySize(player.width*0.5, player.height*0.9);
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
