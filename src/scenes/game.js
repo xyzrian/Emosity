@@ -41,8 +41,6 @@ export default class Game extends Phaser.Scene {
         map = this.make.tilemap({key: 'map'}); //JSON import name
         tileset = map.addTilesetImage('grasstileset', 'tiles'); //Tiled tileset name, png import name
         platforms = map.createLayer("platforms", tileset, 0, 0); //Tiled layer name
-        // platforms = map.createLayer("platforms", tileset, 0, windowHeight).setOrigin(0, 1); //Tiled layer name
-        // platforms.setOrigin(1, 1).setPosition(0, windowHeight);
         platforms.setCollisionBetween(1, 25); //start and stop tiles
 
         //Player instantiation
@@ -65,9 +63,9 @@ export default class Game extends Phaser.Scene {
     update ()
     {
         //Cloud animation
-        cloudsSmall.tilePositionX += 0.25;
-        cloudsMedium.tilePositionX += 0.2;
-        cloudsLarge.tilePositionX += 0.1;
+        cloudsSmall.tilePositionX += 0.15;
+        cloudsMedium.tilePositionX += 0.1;
+        cloudsLarge.tilePositionX += 0.05;
     }
 }
 

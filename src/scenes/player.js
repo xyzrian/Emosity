@@ -64,7 +64,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if(cursors.up.isDown && this.body.onFloor())
         {
             this.setVelocityY(-200);
-            this.setAccelerationY(-100);
+            this.setAccelerationY(-150);
         }
     }
 }
