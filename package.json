@@ -33,7 +33,9 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "jquery": "^3.6.0",
     "phaser": "^3.50.0",
+    "phaser-tilemap-plus": "^0.10.2",
     "phaser-ui-tools": "^2.0.0-beta"
   }
 }

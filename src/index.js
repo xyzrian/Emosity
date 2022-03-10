@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 import Boot from './scenes/boot'
 import Game from './scenes/game'
+// import 'phaser-tilemap-plus'
 
 const config = {
     title: "Emosity",

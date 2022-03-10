@@ -50,7 +50,11 @@ export default class Boot extends Phaser.Scene {
         this.load.image('logo', 'src/assets/logo.png' )
 
         this.load.tilemapTiledJSON('map', 'src/assets/testmap.json');
-        this.load.image('tiles', 'src/assets/grasstileset.png');
+        this.load.image('grasstiles', 'src/assets/grasstileset.png');
+        this.load.spritesheet('records', 'src/assets/records.png', { frameWidth: 19, frameHeight: 12, startFrame: 0, endFrame: 2});
+        this.load.image('yellowrecord', 'src/assets/yellowrecord.png');
+        // this.load.image('redrecord', 'src/assets/redrecord.png');
+        this.load.spritesheet('decor', 'src/assets/decor.png', { frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 4});
 
 
         for (var i = 0; i < 500; i++) {
