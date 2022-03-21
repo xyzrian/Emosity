@@ -42,6 +42,8 @@ export default class Boot extends Phaser.Scene {
             loadingMessage.destroy();
         });
 
+        // this.load.plugin('phaser-ui-tools', 'lib/phaser-ui-tools.js');
+
         this.load.spritesheet('player', 'src/assets/player1.png', { frameWidth: 42, frameHeight: 76 }); 
         this.load.image('sky', 'src/assets/sky.png');
         this.load.image('cloudsLarge', 'src/assets/cloudsLarge.png');
@@ -51,10 +53,9 @@ export default class Boot extends Phaser.Scene {
 
         this.load.tilemapTiledJSON('map', 'src/assets/testmap.json');
         this.load.image('grasstiles', 'src/assets/grasstileset.png');
-        this.load.spritesheet('records', 'src/assets/records.png', { frameWidth: 19, frameHeight: 12, startFrame: 0, endFrame: 2});
-        this.load.image('yellowrecord', 'src/assets/yellowrecord.png');
-        // this.load.image('redrecord', 'src/assets/redrecord.png');
-        this.load.spritesheet('decor', 'src/assets/decor.png', { frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('records', 'src/assets/records.png', { frameWidth: 19, frameHeight: 12, startFrame: 0, endFrame: 9});
+        this.load.spritesheet('decor', 'src/assets/decor.png', { frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 9});
+        this.load.image('defaultrecord', 'src/assets/defaultrecord.png');
 
 
         for (var i = 0; i < 500; i++) {
