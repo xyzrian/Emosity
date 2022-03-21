@@ -38,7 +38,6 @@ export default class Game extends Phaser.Scene {
       
     create ()
     {
-        console.log(windowHeight);
         // this.plugins.installScenePlugin('phaser-ui-tools', uiWidgets, null, true);
         // var { gameWidth, gameHeight } = this.sys.game.canvas;
         //World bounds

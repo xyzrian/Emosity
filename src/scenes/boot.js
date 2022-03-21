@@ -43,6 +43,7 @@ export default class Boot extends Phaser.Scene {
         });
 
         // this.load.plugin('phaser-ui-tools', 'lib/phaser-ui-tools.js');
+        this.load.image('star', 'src/assets/star.png');
 
         this.load.spritesheet('player', 'src/assets/player1.png', { frameWidth: 42, frameHeight: 76 }); 
         this.load.image('sky', 'src/assets/sky.png');
