@@ -222,7 +222,7 @@ export default class Game extends Phaser.Scene {
             currentCol = 0;
         }
 
-        if(currentGrid <= 4)
+        if(currentGrid <= 3)
         {
             record.setPosition(topLeft['x']+(gridCellWidth/2)+(gridCellWidth*currentCol), topLeft['y']+(gridCellHeight/3));
         }
