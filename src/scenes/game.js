@@ -16,9 +16,10 @@ var gridWidth = 300;
 var gridHeight = 200;
 var gridCellWidth = 75;
 var gridCellHeight = 100;
+var currentCol = 0;
 var currentGrid = 0;
 var topLeft = [];
-
+var bottomLeft = [];
 
 var player;
 var map;
@@ -177,6 +178,7 @@ export default class Game extends Phaser.Scene {
                                 .setScrollFactor(0, 0);
         
         inventory.getTopLeft(topLeft);
+        inventory.getBottomLeft(bottomLeft);
 
         inventoryIcon.on('pointerdown', function () {
             if(inventoryFlag == false)
@@ -212,8 +214,24 @@ export default class Game extends Phaser.Scene {
         record.setScrollFactor(0, 0);
         record.setScale(2);
         record.setDepth(1);
-        record.setPosition(topLeft['x']+(gridCellWidth/2)+(gridCellWidth*currentGrid), topLeft['y']+(gridCellHeight/3));
+        // record.setPosition(topLeft['x']+(gridCellWidth/2)+(gridCellWidth*currentCol), topLeft['y']+(gridCellHeight/3));
 
+        //reset currentCol when reaching new row
+        if(currentGrid == 4)
+        {
+            currentCol = 0;
+        }
+
+        if(currentGrid <= 4)
+        {
+            record.setPosition(topLeft['x']+(gridCellWidth/2)+(gridCellWidth*currentCol), topLeft['y']+(gridCellHeight/3));
+        }
+        else
+        {
+            record.setPosition(bottomLeft['x']+(gridCellWidth/2)+(gridCellWidth*currentCol), bottomLeft['y']-(gridCellHeight*2/3));
+        }
+
+        currentCol++;
         currentGrid++;
     }
 
