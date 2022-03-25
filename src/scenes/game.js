@@ -1,24 +1,39 @@
 import Phaser from 'phaser'
 import Player from './player.js'
-import { uiWidgets, Viewport, Column } from 'phaser-ui-tools'
 
 var windowWidth = 480;
 var windowHeight = 270;
 var gameWidth = 32*32;
 var gameHeight = 13*32;
+
 // var cursors;
 var space;
 var esc;
+
+var inventoryIcon;
+var inventoryFlag = false;
+var gridWidth = 300;
+var gridHeight = 200;
+var gridCellWidth = 75;
+var gridCellHeight = 100;
+var currentGrid = 0;
+var topLeft = [];
+
+
 var player;
 var map;
 var grasstileset;
+
 var platforms;
-var decorGroup;
+var decor;
 var records;
 var recordGroup;
+var collected; 
+
 var cloudsSmall;
 var cloudsMedium;
 var cloudsLarge;
+
 
 export default class Game extends Phaser.Scene {
     constructor() {
@@ -59,9 +74,8 @@ export default class Game extends Phaser.Scene {
         // platforms.resizeWorld(); this shit is undefined
         
         recordGroup = this.physics.add.staticGroup(); 
-        records = map.createFromObjects('records', { key: 'defaultrecord' }); //placeholder texture
+        records = map.createFromObjects('records', { key: 'records' }); //placeholder texture
         records.forEach(object => {
-            console.log(object.getData(0).name);
             if(object.getData(0).value == 'red')
             {
                 object.setTexture('records', 1);
@@ -86,8 +100,8 @@ export default class Game extends Phaser.Scene {
             recordGroup.add(object);
         })
 
-        decorGroup = map.createFromObjects('decor', { key: 'decor' });
-        decorGroup.forEach(object => {
+        decor = map.createFromObjects('decor', { key: 'decor' });
+        decor.forEach(object => {
             if(object.getData(0).name == 'grass')
             {
                 if(object.getData(0).value == 'tall')
@@ -138,8 +152,46 @@ export default class Game extends Phaser.Scene {
 
         // var panel = this.rexUI.add.scrollablePanel(config);
 
-        this.scene.launch('Inventory');
+        // this.scene.launch('Inventory', { records: this.recordGroup});
 
+        // recordGroup.getChildren().forEach(object => {
+        //     if(object.data.get('collected'))
+        //     {
+        //         collected.push(object);
+        //         console.log(collected);
+        //     }
+        // })
+
+
+        // this.scene.launch('Inventory');
+
+        inventoryIcon = this.add.sprite(windowWidth-20, 20, 'star').setInteractive().setScrollFactor(0, 0);
+        collected = this.physics.add.staticGroup();
+        collected.scaleXY(2);
+
+        var inventory = this.add.grid(windowWidth/2, windowHeight/2, gridWidth, gridHeight, gridCellWidth, gridCellHeight, 0x4B4B4B)
+                                .setAltFillStyle(0x656565)
+                                // .setOutlineStyle(0x000000)
+                                .setActive(false)
+                                .setVisible(false)
+                                .setScrollFactor(0, 0);
+        
+        inventory.getTopLeft(topLeft);
+
+        inventoryIcon.on('pointerdown', function () {
+            if(inventoryFlag == false)
+            {
+                inventory.setActive(true).setVisible(true);
+                collected.setActive(true).setVisible(true);
+                inventoryFlag = true;
+            }
+            else
+            {
+                inventory.setActive(false).setVisible(false);
+                collected.setActive(false).setVisible(false);
+                inventoryFlag = false;
+            }
+        }, this)
 
     }
 
@@ -149,11 +201,23 @@ export default class Game extends Phaser.Scene {
         cloudsSmall.tilePositionX += 0.15;
         cloudsMedium.tilePositionX += 0.1;
         cloudsLarge.tilePositionX += 0.05;
+        
     }
 
     collectRecord(player, record) 
     {
+        collected.add(record);
+        recordGroup.remove(record);
         record.setActive(false).setVisible(false);
+        record.setScrollFactor(0, 0);
+        record.setScale(2);
+        record.setDepth(1);
+        record.setPosition(topLeft['x']+(gridCellWidth/2)+(gridCellWidth*currentGrid), topLeft['y']+(gridCellHeight/3));
+
+        currentGrid++;
     }
+
+
 }
+
 
