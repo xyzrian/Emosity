@@ -1,7 +1,6 @@
 import Phaser from 'phaser'
 import Boot from './scenes/boot'
 import Game from './scenes/game'
-import Inventory from './scenes/inventory'
 
 // const ratio = Math.max(window.innerWidth / window.innerHeight, window.innerHeight / window.innerWidth)
 // const DEFAULT_HEIGHT = 270 // any height you want
@@ -26,7 +25,7 @@ const config = {
             debug: false
         }
     },
-    scene: [Boot, Game, Inventory]
+    scene: [Boot, Game]
 };
 
 const game = new Phaser.Game(config);

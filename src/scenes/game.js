@@ -20,6 +20,7 @@ var currentCol = 0;
 var currentGrid = 0;
 var topLeft = [];
 var bottomLeft = [];
+var buttons;
 
 var player;
 var map;
@@ -151,24 +152,11 @@ export default class Game extends Phaser.Scene {
         // esc = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
         // space = this.input.keyboard.addKey(Phaser.Keyboard.SPACE);
 
-        // var panel = this.rexUI.add.scrollablePanel(config);
-
-        // this.scene.launch('Inventory', { records: this.recordGroup});
-
-        // recordGroup.getChildren().forEach(object => {
-        //     if(object.data.get('collected'))
-        //     {
-        //         collected.push(object);
-        //         console.log(collected);
-        //     }
-        // })
-
-
-        // this.scene.launch('Inventory');
-
         inventoryIcon = this.add.sprite(windowWidth-20, 20, 'star').setInteractive().setScrollFactor(0, 0);
         collected = this.physics.add.staticGroup();
         collected.scaleXY(2);
+
+        buttons = this.add.group();
 
         var inventory = this.add.grid(windowWidth/2, windowHeight/2, gridWidth, gridHeight, gridCellWidth, gridCellHeight, 0x4B4B4B)
                                 .setAltFillStyle(0x656565)
@@ -185,16 +173,20 @@ export default class Game extends Phaser.Scene {
             {
                 inventory.setActive(true).setVisible(true);
                 collected.setActive(true).setVisible(true);
+                buttons.setActive(true).setVisible(true);
                 inventoryFlag = true;
             }
             else
             {
                 inventory.setActive(false).setVisible(false);
                 collected.setActive(false).setVisible(false);
+                buttons.setActive(true).setVisible(false);
                 inventoryFlag = false;
             }
-        }, this)
+        }, this);
 
+        //Vinyl songs
+        var blue = this.sound.add('blue', { loop: false });
     }
 
     update ()
@@ -210,11 +202,28 @@ export default class Game extends Phaser.Scene {
     {
         collected.add(record);
         recordGroup.remove(record);
-        record.setActive(false).setVisible(false);
-        record.setScrollFactor(0, 0);
-        record.setScale(2);
-        record.setDepth(1);
-        // record.setPosition(topLeft['x']+(gridCellWidth/2)+(gridCellWidth*currentCol), topLeft['y']+(gridCellHeight/3));
+        
+        record.setActive(false).setVisible(false).setScrollFactor(0, 0).setScale(2).setDepth(1);
+
+        var button = this.add.sprite(0, 0, 'buttons', 1).setActive(false).setVisible(false).setInteractive().setScrollFactor(0, 0);
+        buttons.add(button);
+        button.setDataEnabled();
+        button.data.set('vinyl', record.getData(0).value);
+        button.data.set('playing', false);
+        button.on('pointerdown', function () {
+            if(button.getData('playing') == false)
+            {
+                button.setTexture('buttons', 0);
+                button.setData('playing', true);
+                var song = button.getData('vinyl');
+                song.play();
+            }
+            else if(button.getData('playing') == true)
+            {
+                button.setTexture('buttons', 1);
+                button.setData('playing', false);
+            }
+        }, this);
 
         //reset currentCol when reaching new row
         if(currentGrid == 4)
@@ -224,11 +233,13 @@ export default class Game extends Phaser.Scene {
 
         if(currentGrid <= 3)
         {
-            record.setPosition(topLeft['x']+(gridCellWidth/2)+(gridCellWidth*currentCol), topLeft['y']+(gridCellHeight/3));
+            record.setPosition(topLeft['x']+(gridCellWidth/2)+(gridCellWidth*currentCol), topLeft['y']+(gridCellHeight/3), 1); // z = depth of 1 
+            button.setPosition(topLeft['x']+(gridCellWidth/2)+(gridCellWidth*currentCol), topLeft['y']+(gridCellHeight*2/3), 1);
         }
         else
         {
-            record.setPosition(bottomLeft['x']+(gridCellWidth/2)+(gridCellWidth*currentCol), bottomLeft['y']-(gridCellHeight*2/3));
+            record.setPosition(bottomLeft['x']+(gridCellWidth/2)+(gridCellWidth*currentCol), bottomLeft['y']-(gridCellHeight*2/3), 1);
+            button.setPosition(bottomLeft['x']+(gridCellWidth/2)+(gridCellWidth*currentCol), bottomLeft['y']-(gridCellHeight/3), 1);
         }
 
         currentCol++;

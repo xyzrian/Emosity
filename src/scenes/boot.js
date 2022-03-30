@@ -60,10 +60,8 @@ export default class Boot extends Phaser.Scene {
 
         this.load.spritesheet('buttons', 'src/assets/buttons.png', { frameWidth: 25, frameHeight: 25, startFrame: 0, endFrame: 1});
 
-
-        for (var i = 0; i < 500; i++) {
-			this.load.image('testloading'+i, 'src/assets/star.png');
-		};
+        this.load.audio('happyBirthday', ['src/assets/happyBirthday.mp3']);
+        this.load.audio('blue', ['src/assets/happyBirthday.mp3']);
     }
       
     create ()
