@@ -186,7 +186,7 @@ export default class Game extends Phaser.Scene {
         }, this);
 
         //Vinyl songs
-        var blue = this.sound.add('blue', { loop: false });
+        // var blue = this.sound.add('blue', { loop: false });
     }
 
     update ()
@@ -205,6 +205,7 @@ export default class Game extends Phaser.Scene {
         
         record.setActive(false).setVisible(false).setScrollFactor(0, 0).setScale(2).setDepth(1);
 
+        var blue;
         var button = this.add.sprite(0, 0, 'buttons', 1).setActive(false).setVisible(false).setInteractive().setScrollFactor(0, 0);
         buttons.add(button);
         button.setDataEnabled();
@@ -213,15 +214,19 @@ export default class Game extends Phaser.Scene {
         button.on('pointerdown', function () {
             if(button.getData('playing') == false)
             {
+                buttons.children.each(function(button) {
+                    button.setTexture('buttons', 1);
+                });
                 button.setTexture('buttons', 0);
                 button.setData('playing', true);
-                var song = button.getData('vinyl');
-                song.play();
+                blue = this.sound.add('blue', { loop: false });
+                blue.play();
             }
             else if(button.getData('playing') == true)
             {
                 button.setTexture('buttons', 1);
                 button.setData('playing', false);
+                blue.stop();
             }
         }, this);
 
