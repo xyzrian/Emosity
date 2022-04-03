@@ -55,8 +55,6 @@ export default class Game extends Phaser.Scene {
       
     create ()
     {
-        // this.plugins.installScenePlugin('phaser-ui-tools', uiWidgets, null, true);
-        // var { gameWidth, gameHeight } = this.sys.game.canvas;
         //World bounds
         this.physics.world.setBounds(0, 0, gameWidth, gameHeight, true, false, false, true);  // left/right/top/bottom
 
@@ -184,9 +182,7 @@ export default class Game extends Phaser.Scene {
                 inventoryFlag = false;
             }
         }, this);
-
-        //Vinyl songs
-        // var blue = this.sound.add('blue', { loop: false });
+        
     }
 
     update ()
@@ -214,19 +210,23 @@ export default class Game extends Phaser.Scene {
         button.on('pointerdown', function () {
             if(button.getData('playing') == false)
             {
+                this.sound.stopAll();
                 buttons.children.each(function(button) {
                     button.setTexture('buttons', 1);
                 });
                 button.setTexture('buttons', 0);
                 button.setData('playing', true);
-                blue = this.sound.add('blue', { loop: false });
-                blue.play();
+                if(button.getData('vinyl').name == 'blue')
+                {
+                    blue = this.sound.add('blue', { loop: false });
+                    blue.play();
+                }
             }
             else if(button.getData('playing') == true)
             {
                 button.setTexture('buttons', 1);
                 button.setData('playing', false);
-                blue.stop();
+                this.sound.stopAll();
             }
         }, this);
 
