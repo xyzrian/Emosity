@@ -216,7 +216,7 @@ export default class Game extends Phaser.Scene {
                 });
                 button.setTexture('buttons', 0);
                 button.setData('playing', true);
-                if(button.getData('vinyl').name == 'blue')
+                if(button.getData('vinyl') == 'blue')
                 {
                     blue = this.sound.add('blue', { loop: false });
                     blue.play();
