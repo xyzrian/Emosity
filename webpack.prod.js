@@ -1,6 +1,5 @@
 'use strict';
 
-const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
@@ -13,12 +12,11 @@ module.exports = {
 
   // output file
   output: {
+      //path
+      path: path.resolve(__dirname, 'dist'),
 
       // file name
-      filename: "bundle.js",
-
-      // complete path
-      path: __dirname
+      filename: "bundle.js"
   }
 }
 
