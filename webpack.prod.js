@@ -1,10 +1,15 @@
+'use strict';
+
+const webpack = require('webpack');
+const path = require('path');
+
 module.exports = {
  
   // production mode
   mode: "production",
 
   // input file
-  entry: "./index.js",
+  entry: "./src/index.js",
 
   // output file
   output: {
@@ -16,3 +21,4 @@ module.exports = {
       path: __dirname
   }
 }
+
