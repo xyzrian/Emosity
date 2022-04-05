@@ -54,7 +54,7 @@ module.exports = {
   },
   output: {
     path: paths.appBuild,
-    publicPath: '/',
+    publicPath: '/Emosity/',
     filename: 'js/[name].[chunkhash:8].bundle.js',
   },
   module: {
