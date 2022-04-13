@@ -2,10 +2,6 @@ import Phaser from 'phaser'
 import Boot from './scenes/boot'
 import Game from './scenes/game'
 
-// const ratio = Math.max(window.innerWidth / window.innerHeight, window.innerHeight / window.innerWidth)
-// const DEFAULT_HEIGHT = 270 // any height you want
-// const DEFAULT_WIDTH = ratio * DEFAULT_HEIGHT
-
 const config = {
     title: "Emosity",
     version: "0.0.1",
