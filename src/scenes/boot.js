@@ -42,9 +42,6 @@ export default class Boot extends Phaser.Scene {
             loadingMessage.destroy();
         });
 
-        // this.load.plugin('phaser-ui-tools', 'lib/phaser-ui-tools.js');
-        this.load.image('star', 'src/assets/star.png');
-
         this.load.spritesheet('player', 'src/assets/player1.png', { frameWidth: 42, frameHeight: 76 }); 
         this.load.image('sky', 'src/assets/sky.png');
         this.load.image('cloudsLarge', 'src/assets/cloudsLarge.png');
@@ -58,6 +55,7 @@ export default class Boot extends Phaser.Scene {
         this.load.spritesheet('decor', 'src/assets/decor.png', { frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 9});
         this.load.image('defaultrecord', 'src/assets/defaultrecord.png');
 
+        this.load.image('inventoryIcon', 'src/assets/inventoryIcon.png');
         this.load.spritesheet('buttons', 'src/assets/buttons.png', { frameWidth: 25, frameHeight: 25, startFrame: 0, endFrame: 1});
 
         this.load.audio('happyBirthday', ['src/assets/happyBirthday.mp3']);

@@ -6,10 +6,6 @@ var windowHeight = 270;
 var gameWidth = 32*32;
 var gameHeight = 13*32;
 
-// var cursors;
-var space;
-var esc;
-
 var inventoryIcon;
 var inventoryFlag = false;
 var gridWidth = 300;
@@ -44,13 +40,7 @@ export default class Game extends Phaser.Scene {
 
     preload ()
     {
-        this.gameWidth = this.sys.game.canvas.width
-        this.gameHeight = this.sys.game.canvas.height
-        this.load.scenePlugin({
-            key: 'rexuiplugin',
-            url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
-            sceneKey: 'rexUI'
-        }); 
+        
     }
       
     create ()
@@ -68,10 +58,8 @@ export default class Game extends Phaser.Scene {
         map = this.make.tilemap({key: 'map'}); //JSON import name
         
         grasstileset = map.addTilesetImage('grasstileset', 'grasstiles'); //Tiled tileset name, png import name
-        // recordstileset = map.addTilesetImage('records', 'records');
         
         platforms = map.createLayer('platforms', grasstileset); //Tiled layer name
-        // platforms.resizeWorld(); this shit is undefined
         
         recordGroup = this.physics.add.staticGroup(); 
         records = map.createFromObjects('records', { key: 'records' }); //placeholder texture
@@ -146,11 +134,8 @@ export default class Game extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, gameWidth, gameHeight);
         this.cameras.main.startFollow(player);
 
-        // cursors = this.input.keyboard.createCursorKeys();
-        // esc = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
-        // space = this.input.keyboard.addKey(Phaser.Keyboard.SPACE);
-
-        inventoryIcon = this.add.sprite(windowWidth-20, 20, 'star').setInteractive().setScrollFactor(0, 0);
+        //Inventory 
+        inventoryIcon = this.add.sprite(windowWidth-25, 25, 'inventoryIcon').setInteractive().setScrollFactor(0, 0);
         collected = this.physics.add.staticGroup();
         collected.scaleXY(2);
 
@@ -158,11 +143,11 @@ export default class Game extends Phaser.Scene {
 
         var inventory = this.add.grid(windowWidth/2, windowHeight/2, gridWidth, gridHeight, gridCellWidth, gridCellHeight, 0x4B4B4B)
                                 .setAltFillStyle(0x656565)
-                                // .setOutlineStyle(0x000000)
                                 .setActive(false)
                                 .setVisible(false)
                                 .setScrollFactor(0, 0);
         
+        //Inventory top/bottom left coords to set record position later
         inventory.getTopLeft(topLeft);
         inventory.getBottomLeft(bottomLeft);
 
@@ -196,17 +181,25 @@ export default class Game extends Phaser.Scene {
 
     collectRecord(player, record) 
     {
+        //Add record to collected group, remove from record group
         collected.add(record);
         recordGroup.remove(record);
         
+        //Record disabled until inventory is enabled
         record.setActive(false).setVisible(false).setScrollFactor(0, 0).setScale(2).setDepth(1);
-
+    
+        //Record sounds
         var blue;
+
+        //Add play button for the record
         var button = this.add.sprite(0, 0, 'buttons', 1).setActive(false).setVisible(false).setInteractive().setScrollFactor(0, 0);
+        //Add buttons to button group, set data for vinyl and playing state
         buttons.add(button);
         button.setDataEnabled();
         button.data.set('vinyl', record.getData(0).value);
         button.data.set('playing', false);
+
+        //Button press logic
         button.on('pointerdown', function () {
             if(button.getData('playing') == false)
             {
