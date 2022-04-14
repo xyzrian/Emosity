@@ -27,6 +27,7 @@ var decor;
 var records;
 var recordGroup;
 var collected; 
+var musicNotes;
 
 var cloudsSmall;
 var cloudsMedium;
@@ -167,6 +168,8 @@ export default class Game extends Phaser.Scene {
                 inventoryFlag = false;
             }
         }, this);
+
+        musicNotes = this.add.particles('musicNotes');
         
     }
 
@@ -181,6 +184,20 @@ export default class Game extends Phaser.Scene {
 
     collectRecord(player, record) 
     {
+        musicNotes.createEmitter({
+            frame: { frames: [ 'red', 'orange', 'yellow', 'green', 'blue', 'purple' ], cycle: true },
+            x: 0,
+            y: 0,
+            speed: { min: 0, max: 25 },
+            scale: { min: 0.5, max: 1.25 },
+            gravityY: -25,
+            angle: { min: 0, max: -180 },
+            lifespan: 1500,
+            maxParticles: 30
+        });
+
+        musicNotes.setPosition(record.x, record.y);
+
         //Add record to collected group, remove from record group
         collected.add(record);
         recordGroup.remove(record);
@@ -220,6 +237,7 @@ export default class Game extends Phaser.Scene {
                 button.setTexture('buttons', 1);
                 button.setData('playing', false);
                 this.sound.stopAll();
+                recordPlayerParticles.stop();
             }
         }, this);
 
