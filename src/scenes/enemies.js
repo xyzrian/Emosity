@@ -7,7 +7,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
         this.anims.create({
             key: 'left',
-            frames: this.anims.generateFrameNumbers('enemy', {start: 0, end: 0}),
+            frames: this.anims.generateFrameNumbers('enemies', {start: 1, end: 1}),
             frameRate: 7,
             repeat: -1,
             yoyo: true
@@ -15,23 +15,23 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
         this.anims.create({
             key: 'right',
-            frames: this.anims.generateFrameNumbers('enemy', {start: 0, end: 0}),
+            frames: this.anims.generateFrameNumbers('enemies', {start: 0, end: 0}),
             frameRate: 7,
             repeat: -1,
             yoyo: true
         });
 
-        this.anims.create({
-            key: 'default',
-            frames: [{key: 'enemy', frame: 0}],
-            frameRate: 10
-        });
+        // this.anims.create({
+        //     key: 'default',
+        //     frames: [{key: 'enemy', frame: 0}],
+        //     frameRate: 10
+        // });
 
     }
 
     create()
     {
-        
+
     }
 
     preUpdate(time, delta)
@@ -41,10 +41,12 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         if(this.body.touching.right || this.body.blocked.right)
         {
             this.setVelocityX(-50);
+            this.anims.play('left', true);
         }
         else if(this.body.touching.left || this.body.blocked.left)
         {
             this.setVelocityX(50);
+            this.anims.play('right', true);
         }
     }
 }
