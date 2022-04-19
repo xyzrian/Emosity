@@ -150,6 +150,7 @@ export default class Game extends Phaser.Scene {
         this.physics.add.collider(player, platforms);  
 
         this.physics.add.overlap(player, recordGroup, this.collectRecord, null, this);
+        this.physics.add.overlap(player, enemyGroup, this.playerDeath, null, this);
 
         //Camera instantiation
         this.cameras.main.setBounds(0, 0, gameWidth, gameHeight);
@@ -282,6 +283,35 @@ export default class Game extends Phaser.Scene {
         currentGrid++;
     }
 
+    playerDeath(player, enemy)
+    {
+        console.log('player has died lol rip');
+        musicNotes.createEmitter({
+            frame: { frames: [ 'red', 'orange', 'yellow', 'green', 'blue', 'purple' ], cycle: true },
+            x: 0,
+            y: 0,
+            speed: { min: 0, max: 25 },
+            scale: { min: 0.5, max: 1.25 },
+            gravityY: -25,
+            angle: { min: 0, max: -180 },
+            lifespan: 1500,
+            maxParticles: 30
+        });
+
+        this.cameras.main.stopFollow();
+        player.setVisible(false).setActive(false);
+        player.body.setVelocity(0);
+        musicNotes.setPosition(player.x, player.y);
+        player.setPosition(20, gameHeight-120)
+
+        this.time.addEvent({
+            delay: 1000,
+            callback: ()=> {
+                player.setVisible(true).setActive(true);
+                this.cameras.main.startFollow(player);
+            }
+        })
+    }
 
 }
 
