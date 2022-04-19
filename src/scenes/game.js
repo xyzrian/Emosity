@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import Player from './player.js'
+import Enemy from './enemies.js'
 
 var windowWidth = 480;
 var windowHeight = 270;
@@ -20,14 +21,17 @@ var buttons;
 
 var player;
 var map;
-var grasstileset;
 
 var platforms;
+var walls;
 var decor;
 var records;
 var recordGroup;
 var collected; 
 var musicNotes;
+
+var enemies;
+var enemyGroup;
 
 var cloudsSmall;
 var cloudsMedium;
@@ -58,12 +62,17 @@ export default class Game extends Phaser.Scene {
         //Tiled map
         map = this.make.tilemap({key: 'map'}); //JSON import name
         
-        grasstileset = map.addTilesetImage('grasstileset', 'grasstiles'); //Tiled tileset name, png import name
-        
+        let grasstileset = map.addTilesetImage('grasstileset', 'grasstiles'); //Tiled tileset name, png import name
         platforms = map.createLayer('platforms', grasstileset); //Tiled layer name
+        platforms.setCollisionByExclusion([-1]); 
+
+        let wallImage = map.addTilesetImage('walls', 'walls');
+        walls = map.createLayer('walls', wallImage);
+        walls.setCollisionByExclusion([-1]);
+        walls.visible = false;
         
         recordGroup = this.physics.add.staticGroup(); 
-        records = map.createFromObjects('records', { key: 'records' }); //placeholder texture
+        records = map.createFromObjects('records', { key: 'records' }); 
         records.forEach(object => {
             if(object.getData(0).value == 'red')
             {
@@ -120,9 +129,20 @@ export default class Game extends Phaser.Scene {
             }
         })
 
-        platforms.setCollisionByExclusion([-1]); 
+        //Enemies instantiation using Enemy extended class
+        enemyGroup = this.physics.add.group();
+        enemyGroup.enableBody = true;
+        enemyGroup.collideWorldBounds = true;
+        enemies = map.getObjectLayer('enemies');
+        enemies.objects.forEach(object => {
+            let enemy = this.physics.add.existing(new Enemy(this, object.x, object.y, 'enemies'));
+            this.physics.add.collider(enemy, platforms);
+            this.physics.add.collider(enemy, walls);
+            enemyGroup.add(enemy);
+            enemy.setVelocityX(50);
+        })
 
-        //Player instantiation
+        //Player instantiation using Player extended class
         player = this.physics.add.existing(new Player(this, 20, gameHeight-120, 'player'));
         player.setBodySize(player.width*0.5, player.height*0.9);
         player.setBounce(0.2);

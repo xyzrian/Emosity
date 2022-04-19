@@ -53,12 +53,14 @@ export default class Boot extends Phaser.Scene {
         this.load.image('grasstiles', 'src/assets/grasstileset.png');
         this.load.spritesheet('records', 'src/assets/records.png', { frameWidth: 19, frameHeight: 12, startFrame: 0, endFrame: 9});
         this.load.spritesheet('decor', 'src/assets/decor.png', { frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 9});
-        this.load.image('defaultrecord', 'src/assets/defaultrecord.png');
+        this.load.image('walls', 'src/assets/wall.png');
 
         this.load.image('inventoryIcon', 'src/assets/inventoryIcon.png');
         this.load.spritesheet('buttons', 'src/assets/buttons.png', { frameWidth: 25, frameHeight: 25, startFrame: 0, endFrame: 1});
-        // this.load.spritesheet('musicNotes', 'src/assets/musicNotes.png', { frameWidth: 5, frameHeight: 8 });
         this.load.atlas('musicNotes', 'src/assets/musicNotes.png', 'src/assets/musicNotes.json');
+
+        // this.load.spritesheet('enemies', 'src/assets/star.png', { frameWidth: 24, frameHeight: 22, startFrame: 0, endFrame: 0 });
+        this.load.image('enemies', 'src/assets/star.png');
 
         this.load.audio('happyBirthday', ['src/assets/happyBirthday.mp3']);
         this.load.audio('blue', ['src/assets/happyBirthday.mp3']);

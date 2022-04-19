@@ -25,7 +25,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             key: 'right',
             frames: this.anims.generateFrameNumbers('player', {start: 4, end: 6}),
             frameRate: 7,
-            repeat: -1
+            repeat: -1,
+            yoyo: true
         });
 
         this.anims.create({
