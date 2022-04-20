@@ -30,6 +30,7 @@ var recordGroup;
 var collected; 
 var musicNotes;
 var deathParticles;
+var respawnButton;
 
 var enemies;
 var enemyGroup;
@@ -294,7 +295,7 @@ export default class Game extends Phaser.Scene {
             scale: { min: 0.75, max: 1.25 },
             gravityY: -25,
             angle: { min: 0, max: -180 },
-            lifespan: 2000,
+            lifespan: 2500,
             maxParticles: 30
         });
 
@@ -307,8 +308,13 @@ export default class Game extends Phaser.Scene {
         this.time.addEvent({
             delay: 1500,
             callback: ()=> {
-                player.setVisible(true).setActive(true);
-                this.cameras.main.startFollow(player);
+                respawnButton = this.add.sprite(windowWidth/2, windowHeight/2, 'respawnButton').setScale(1.5).setInteractive().setScrollFactor(0, 0);
+
+                respawnButton.on('pointerdown', function () {
+                    respawnButton.destroy();
+                    player.setVisible(true).setActive(true);
+                    this.cameras.main.startFollow(player);
+                }, this);
             }
         })
     }
