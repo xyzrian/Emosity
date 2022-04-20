@@ -29,6 +29,7 @@ var records;
 var recordGroup;
 var collected; 
 var musicNotes;
+var deathParticles;
 
 var enemies;
 var enemyGroup;
@@ -191,6 +192,7 @@ export default class Game extends Phaser.Scene {
         }, this);
 
         musicNotes = this.add.particles('musicNotes');
+        deathParticles = this.add.particles('deathParticles');
         
     }
 
@@ -258,7 +260,6 @@ export default class Game extends Phaser.Scene {
                 button.setTexture('buttons', 1);
                 button.setData('playing', false);
                 this.sound.stopAll();
-                recordPlayerParticles.stop();
             }
         }, this);
 
@@ -285,27 +286,26 @@ export default class Game extends Phaser.Scene {
 
     playerDeath(player, enemy)
     {
-        console.log('player has died lol rip');
-        musicNotes.createEmitter({
-            frame: { frames: [ 'red', 'orange', 'yellow', 'green', 'blue', 'purple' ], cycle: true },
+        deathParticles.createEmitter({
+            frame: { frames: [ 'skull', 'black' ], cycle: true },
             x: 0,
             y: 0,
             speed: { min: 0, max: 25 },
-            scale: { min: 0.5, max: 1.25 },
+            scale: { min: 0.75, max: 1.25 },
             gravityY: -25,
             angle: { min: 0, max: -180 },
-            lifespan: 1500,
+            lifespan: 2000,
             maxParticles: 30
         });
 
         this.cameras.main.stopFollow();
         player.setVisible(false).setActive(false);
         player.body.setVelocity(0);
-        musicNotes.setPosition(player.x, player.y);
+        deathParticles.setPosition(player.x, player.y);
         player.setPosition(20, gameHeight-120)
 
         this.time.addEvent({
-            delay: 1000,
+            delay: 1500,
             callback: ()=> {
                 player.setVisible(true).setActive(true);
                 this.cameras.main.startFollow(player);
