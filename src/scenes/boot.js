@@ -43,6 +43,8 @@ export default class Boot extends Phaser.Scene {
         });
 
         this.load.spritesheet('player', 'src/assets/player1.png', { frameWidth: 42, frameHeight: 76 }); 
+        this.load.image('playerIntro', 'src/assets/playerIntro.png');
+        this.load.image('blackBg', 'src/assets/blackBg.png');
         this.load.image('sky', 'src/assets/sky.png');
         this.load.image('cloudsLarge', 'src/assets/cloudsLarge.png');
         this.load.image('cloudsMedium', 'src/assets/cloudsMedium.png');
@@ -81,7 +83,10 @@ export default class Boot extends Phaser.Scene {
         });
 
         this.input.on('pointerdown', function() {
-            this.scene.start('Game');
+            this.cameras.main.fadeOut(1000, 0, 0, 0);
+            this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+                this.scene.start('Intro');
+            })
         }, this);
     }
 }

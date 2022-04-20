@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import Boot from './scenes/boot'
+import Intro from './scenes/intro'
 import Game from './scenes/game'
 
 const config = {
@@ -21,7 +22,7 @@ const config = {
             debug: false
         }
     },
-    scene: [Boot, Game]
+    scene: [Boot, Intro, Game]
 };
 
 const game = new Phaser.Game(config);
