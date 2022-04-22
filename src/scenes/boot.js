@@ -50,6 +50,7 @@ export default class Boot extends Phaser.Scene {
         this.load.image('cloudsMedium', 'src/assets/cloudsMedium.png');
         this.load.image('cloudsSmall', 'src/assets/cloudsSmall.png');
         this.load.image('logo', 'src/assets/logo.png' )
+        this.load.image('house', 'src/assets/house.png');
 
         this.load.tilemapTiledJSON('map', 'src/assets/testmap.json');
         this.load.image('grasstiles', 'src/assets/grasstileset.png');
@@ -82,11 +83,16 @@ export default class Boot extends Phaser.Scene {
             duration: 1500,
         });
 
+        //Uncomment for intro scene
+        // this.input.on('pointerdown', function() {
+        //     this.cameras.main.fadeOut(1000, 0, 0, 0);
+        //     this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+        //         this.scene.start('Intro');
+        //     })
+        // }, this);
+
         this.input.on('pointerdown', function() {
-            this.cameras.main.fadeOut(1000, 0, 0, 0);
-            this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
-                this.scene.start('Intro');
-            })
+            this.scene.start('Game');
         }, this);
     }
 }

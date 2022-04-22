@@ -4,8 +4,8 @@ import Enemy from './enemies.js'
 
 var windowWidth = 480;
 var windowHeight = 270;
-var gameWidth = 32*32;
-var gameHeight = 13*32;
+var gameWidth = 50*32;
+var gameHeight = 35*32;
 
 var inventoryIcon;
 var inventoryFlag = false;
@@ -20,8 +20,10 @@ var bottomLeft = [];
 var buttons;
 
 var player;
-var map;
+var playerX = 200;
+var playerY = gameHeight-120;
 
+var map;
 var platforms;
 var walls;
 var decor;
@@ -72,7 +74,7 @@ export default class Game extends Phaser.Scene {
         walls = map.createLayer('walls', wallImage);
         walls.setCollisionByExclusion([-1]);
         walls.visible = false;
-        
+
         recordGroup = this.physics.add.staticGroup(); 
         records = map.createFromObjects('records', { key: 'records' }); 
         records.forEach(object => {
@@ -131,6 +133,8 @@ export default class Game extends Phaser.Scene {
             }
         })
 
+        map.createFromObjects('house', { key: 'house' });
+
         //Enemies instantiation using Enemy extended class
         enemyGroup = this.physics.add.group();
         enemyGroup.enableBody = true;
@@ -145,10 +149,13 @@ export default class Game extends Phaser.Scene {
         })
 
         //Player instantiation using Player extended class
-        player = this.physics.add.existing(new Player(this, 20, gameHeight-120, 'player'));
+        player = this.physics.add.existing(new Player(this, playerX, playerY, 'player'));
         player.setBodySize(player.width*0.5, player.height*0.9);
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
+        player.body.checkCollision.up = false;
+        player.body.checkCollision.left = false;
+        player.body.checkCollision.right = false;
         this.physics.add.collider(player, platforms);  
 
         this.physics.add.overlap(player, recordGroup, this.collectRecord, null, this);
@@ -283,6 +290,16 @@ export default class Game extends Phaser.Scene {
 
         currentCol++;
         currentGrid++;
+
+        if(currentGrid == 1) //All records collected
+        {
+            this.time.addEvent({
+                delay: 1500,
+                callback: ()=> {
+                    this.scene.switch('Outro');
+                }
+            })
+        }
     }
 
     playerDeath(player, enemy)
@@ -303,7 +320,7 @@ export default class Game extends Phaser.Scene {
         player.setVisible(false).setActive(false);
         player.body.setVelocity(0);
         deathParticles.setPosition(player.x, player.y);
-        player.setPosition(20, gameHeight-120)
+        player.setPosition(playerX, playerY);
 
         this.time.addEvent({
             delay: 1500,

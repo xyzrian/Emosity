@@ -2,6 +2,7 @@ import Phaser from 'phaser'
 import Boot from './scenes/boot'
 import Intro from './scenes/intro'
 import Game from './scenes/game'
+import Outro from './scenes/outro'
 
 const config = {
     title: "Emosity",
@@ -18,11 +19,11 @@ const config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y:525 },
+            gravity: { y:450 },
             debug: false
         }
     },
-    scene: [Boot, Intro, Game]
+    scene: [Boot, Intro, Game, Outro]
 };
 
 const game = new Phaser.Game(config);

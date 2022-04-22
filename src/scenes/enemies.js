@@ -21,12 +21,6 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
             yoyo: true
         });
 
-        // this.anims.create({
-        //     key: 'default',
-        //     frames: [{key: 'enemy', frame: 0}],
-        //     frameRate: 10
-        // });
-
     }
 
     create()
