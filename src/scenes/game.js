@@ -325,7 +325,8 @@ export default class Game extends Phaser.Scene {
         this.time.addEvent({
             delay: 1500,
             callback: ()=> {
-                respawnButton = this.add.sprite(windowWidth/2, windowHeight/2, 'respawnButton').setScale(1.5).setInteractive().setScrollFactor(0, 0);
+                respawnButton = this.add.sprite(windowWidth/2, windowHeight/2, 'respawnButton').setScale(2).setInteractive().setScrollFactor(0, 0);
+                // respawnButton = this.add.text(windowWidth/2, windowHeight/2, 'RESPAWN', { fontFamily: 'pixel' }).setResolution(10).setInteractive().setScrollFactor(0, 0);
 
                 respawnButton.on('pointerdown', function () {
                     respawnButton.destroy();
