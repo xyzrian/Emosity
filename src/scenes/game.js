@@ -4,7 +4,7 @@ import Enemy from './enemies.js'
 
 var windowWidth = 480;
 var windowHeight = 270;
-var gameWidth = 50*32;
+var gameWidth = 61*32;
 var gameHeight = 35*32;
 
 var inventoryIcon;
@@ -25,6 +25,8 @@ var playerY = gameHeight-120;
 
 var map;
 var platforms;
+var ladders;
+var ladderGroup;
 var walls;
 var decor;
 var records;
@@ -69,6 +71,12 @@ export default class Game extends Phaser.Scene {
         let grasstileset = map.addTilesetImage('grasstileset', 'grasstiles'); //Tiled tileset name, png import name
         platforms = map.createLayer('platforms', grasstileset); //Tiled layer name
         platforms.setCollisionByExclusion([-1]); 
+
+        let ladderImage = map.addTilesetImage('ladders', 'ladders');
+        ladders = map.createLayer('ladders', ladderImage);
+        // laddersGroup = this.physics.add.staticGroup();
+        ladders.setCollisionByExclusion([-1]); 
+        ladderGroup = this.physics.add.staticGroup(ladders);
 
         let wallImage = map.addTilesetImage('walls', 'walls');
         walls = map.createLayer('walls', wallImage);
@@ -157,6 +165,12 @@ export default class Game extends Phaser.Scene {
         player.body.checkCollision.left = false;
         player.body.checkCollision.right = false;
         this.physics.add.collider(player, platforms);  
+
+       ladderGroup.children.each(function(ladder) {
+        this.physics.add.overlap(player, ladder, function(player) {
+             console.log('ladder overlap', player.x, player.y);
+        });
+        }, this);
 
         this.physics.add.overlap(player, recordGroup, this.collectRecord, null, this);
         this.physics.add.overlap(player, enemyGroup, this.playerDeath, null, this);
@@ -326,7 +340,6 @@ export default class Game extends Phaser.Scene {
             delay: 1500,
             callback: ()=> {
                 respawnButton = this.add.sprite(windowWidth/2, windowHeight/2, 'respawnButton').setScale(2).setInteractive().setScrollFactor(0, 0);
-                // respawnButton = this.add.text(windowWidth/2, windowHeight/2, 'RESPAWN', { fontFamily: 'pixel' }).setResolution(10).setInteractive().setScrollFactor(0, 0);
 
                 respawnButton.on('pointerdown', function () {
                     respawnButton.destroy();
