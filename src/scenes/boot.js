@@ -52,7 +52,8 @@ export default class Boot extends Phaser.Scene {
         this.load.image('logo', 'src/assets/logo.png' )
         this.load.image('house', 'src/assets/house.png');
 
-        this.load.tilemapTiledJSON('map', 'src/assets/testmap.json');
+        // this.load.tilemapTiledJSON('map', 'src/assets/testmap.json');
+        this.load.tilemapTiledJSON('map', 'src/assets/mapv1.json');
         this.load.image('grasstiles', 'src/assets/grasstileset.png');
         this.load.spritesheet('records', 'src/assets/records.png', { frameWidth: 19, frameHeight: 12, startFrame: 0, endFrame: 9});
         this.load.spritesheet('decor', 'src/assets/decor.png', { frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 9});
@@ -84,16 +85,15 @@ export default class Boot extends Phaser.Scene {
             duration: 1500,
         });
 
-        //Uncomment for intro scene
-        // this.input.on('pointerdown', function() {
-        //     this.cameras.main.fadeOut(1000, 0, 0, 0);
-        //     this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
-        //         this.scene.start('Intro');
-        //     })
-        // }, this);
+        this.input.on('pointerdown', function() {
+            this.cameras.main.fadeOut(1000, 0, 0, 0);
+            this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+                this.scene.start('Intro');
+            })
+        }, this);
 
         this.input.on('pointerdown', function() {
-            this.scene.start('Game');
+            this.scene.start('Intro');
         }, this);
     }
 }

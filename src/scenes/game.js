@@ -4,8 +4,8 @@ import Enemy from './enemies.js'
 
 var windowWidth = 480;
 var windowHeight = 270;
-var gameWidth = 61*32;
-var gameHeight = 35*32;
+var gameWidth = 65*32;
+var gameHeight = 40*32;
 
 var inventoryIcon;
 var inventoryFlag = false;
@@ -25,8 +25,6 @@ var playerY = gameHeight-120;
 
 var map;
 var platforms;
-var ladders;
-var ladderGroup;
 var walls;
 var decor;
 var records;
@@ -72,12 +70,12 @@ export default class Game extends Phaser.Scene {
         platforms = map.createLayer('platforms', grasstileset); //Tiled layer name
         platforms.setCollisionByExclusion([-1]); 
 
-        let ladderImage = map.addTilesetImage('ladders', 'ladders');
-        ladders = map.createLayer('ladders', ladderImage);
-        // laddersGroup = this.physics.add.staticGroup();
-        ladders.setCollisionByExclusion([-1]); 
-        ladderGroup = this.physics.add.staticGroup(ladders);
-
+        map.forEachTile(function(tile, index, tileArray) { 
+            tile.collideDown = false;
+            tile.collideLeft = false;
+            tile.collideRight = false;
+        }, this);
+        
         let wallImage = map.addTilesetImage('walls', 'walls');
         walls = map.createLayer('walls', wallImage);
         walls.setCollisionByExclusion([-1]);
@@ -86,6 +84,10 @@ export default class Game extends Phaser.Scene {
         recordGroup = this.physics.add.staticGroup(); 
         records = map.createFromObjects('records', { key: 'records' }); 
         records.forEach(object => {
+            if(object.getData(0).value == 'black')
+            {
+                object.setTexture('records', 0);
+            }
             if(object.getData(0).value == 'red')
             {
                 object.setTexture('records', 1);
@@ -105,6 +107,14 @@ export default class Game extends Phaser.Scene {
             else if(object.getData(0).value == 'mixedbluepink')
             {
                 object.setTexture('records', 5);
+            }
+            else if(object.getData(0).value == 'clear')
+            {
+                object.setTexture('records', 6);
+            }
+            else if(object.getData(0).value == 'splatterbluered')
+            {
+                object.setTexture('records', 9);
             }
 
             recordGroup.add(object);
@@ -161,16 +171,10 @@ export default class Game extends Phaser.Scene {
         player.setBodySize(player.width*0.5, player.height*0.9);
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
-        player.body.checkCollision.up = false;
-        player.body.checkCollision.left = false;
-        player.body.checkCollision.right = false;
+        // player.body.checkCollision.up = false;
+        // player.body.checkCollision.left = false;
+        // player.body.checkCollision.right = false;
         this.physics.add.collider(player, platforms);  
-
-       ladderGroup.children.each(function(ladder) {
-        this.physics.add.overlap(player, ladder, function(player) {
-             console.log('ladder overlap', player.x, player.y);
-        });
-        }, this);
 
         this.physics.add.overlap(player, recordGroup, this.collectRecord, null, this);
         this.physics.add.overlap(player, enemyGroup, this.playerDeath, null, this);
@@ -180,7 +184,7 @@ export default class Game extends Phaser.Scene {
         this.cameras.main.startFollow(player);
 
         //Inventory 
-        inventoryIcon = this.add.sprite(windowWidth-25, 25, 'inventoryIcon').setInteractive().setScrollFactor(0, 0);
+        inventoryIcon = this.add.sprite(windowWidth-25, 40, 'inventoryIcon').setInteractive().setScrollFactor(0, 0);
         collected = this.physics.add.staticGroup();
         collected.scaleXY(2);
 
@@ -305,7 +309,7 @@ export default class Game extends Phaser.Scene {
         currentCol++;
         currentGrid++;
 
-        if(currentGrid == 1) //All records collected
+        if(currentGrid == 8) //All records collected
         {
             this.time.addEvent({
                 delay: 1500,

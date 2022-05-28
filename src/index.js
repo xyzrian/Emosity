@@ -26,4 +26,5 @@ const config = {
     scene: [Boot, Intro, Game, Outro]
 };
 
-const game = new Phaser.Game(config);
+var game = new Phaser.Game(config);
+// window.game = game;
