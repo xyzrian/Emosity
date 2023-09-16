@@ -255,7 +255,8 @@ export default class Game extends Phaser.Scene {
         record.setActive(false).setVisible(false).setScrollFactor(0, 0).setScale(2).setDepth(1);
     
         //Record sounds
-        var blue;
+        // var blue;
+        var vinylMusic;
 
         //Add play button for the record
         var button = this.add.sprite(0, 0, 'buttons', 1).setActive(false).setVisible(false).setInteractive().setScrollFactor(0, 0);
@@ -275,11 +276,21 @@ export default class Game extends Phaser.Scene {
                 });
                 button.setTexture('buttons', 0);
                 button.setData('playing', true);
-                if(button.getData('vinyl') == 'blue')
+                if(button.getData('vinyl') == 'splatterbluered')
                 {
-                    blue = this.sound.add('blue', { loop: false });
-                    blue.play();
+                    vinylMusic = this.sound.add('splatterbluered', { loop: false });
+                    vinylMusic.play();
                 }
+                else if(button.getData('vinyl') == 'blue')
+                {
+                    vinylMusic = this.sound.add('blue', { loop: false });
+                    vinylMusic.play();
+                }
+                //if(button.getData('vinyl') == 'blue')
+                //{
+                //    blue = this.sound.add('blue', { loop: false });
+                //    blue.play();
+                //}
             }
             else if(button.getData('playing') == true)
             {
