@@ -70,8 +70,14 @@ export default class Boot extends Phaser.Scene {
 
         this.load.spritesheet('enemies', 'src/assets/enemy.png', { frameWidth: 27, frameHeight: 30, startFrame: 0, endFrame: 1 });
 
-        this.load.audio('happyBirthday', ['src/assets/happyBirthday.mp3']);
-        this.load.audio('blue', ['src/assets/happyBirthday.mp3']);
+        //this.load.audio('blue', ['src/assets/happyBirthday.mp3']);
+        this.load.audio('red', ['src/assets/ElevatorMusic.mp3']);
+        this.load.audio('yellow', ['src/assets/ForestWalk.mp3']);
+        this.load.audio('blue', ['src/assets/marimbamagic.mp3']);
+        this.load.audio('mixedblueteal', ['src/assets/LateAtNight.mp3']);
+        this.load.audio('mixedbluepink', ['src/assets/MelodyOfNature.mp3']);
+        this.load.audio('clear', ['src/assets/Clown.mp3']);
+        this.load.audio('splatterbluered', ['src/assets/GoodFellow.mp3']);
     }
       
     create ()
