@@ -42,7 +42,7 @@ export default class Intro extends Phaser.Scene {
         text = this.add.text(textX, textY, '', { fontFamily: 'pixel' }).setResolution(10);
         this.displayText(script);
 
-        this.input.on('pointerdown', function() {
+        this.input.on('pointerdown', () => {
             this.scene.start('Game');
         }, this);
     }

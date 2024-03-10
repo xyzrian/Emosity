@@ -88,7 +88,7 @@ export default class Game extends Phaser.Scene {
             {
                 object.setTexture('records', 0);
             }
-            if(object.getData(0).value == 'red')
+            else if(object.getData(0).value == 'red')
             {
                 object.setTexture('records', 1);
             }
@@ -108,11 +108,19 @@ export default class Game extends Phaser.Scene {
             {
                 object.setTexture('records', 5);
             }
-            else if(object.getData(0).value == 'clear')
+            else if(object.getData(0).value == 'mixedtealpurple')
             {
                 object.setTexture('records', 6);
             }
-            else if(object.getData(0).value == 'splatterbluered')
+            else if(object.getData(0).value == 'green')
+            {
+                object.setTexture('records', 7);
+            }
+            else if(object.getData(0).value == 'orange')
+            {
+                object.setTexture('records', 8);
+            }
+            else if(object.getData(0).value == 'broken')
             {
                 object.setTexture('records', 9);
             }
@@ -276,21 +284,56 @@ export default class Game extends Phaser.Scene {
                 });
                 button.setTexture('buttons', 0);
                 button.setData('playing', true);
-                if(button.getData('vinyl') == 'splatterbluered')
+                if(button.getData('vinyl') == 'black')
                 {
-                    vinylMusic = this.sound.add('splatterbluered', { loop: false });
+                    vinylMusic = this.sound.add('black', { loop: false });
+                    vinylMusic.play();
+                }
+                else if(button.getData('vinyl') == 'red')
+                {
+                    vinylMusic = this.sound.add('red', { loop: false });
+                    vinylMusic.play();
+                }
+                else if(button.getData('vinyl') == 'yellow')
+                {
+                    vinylMusic = this.sound.add('yellow', { loop: false });
                     vinylMusic.play();
                 }
                 else if(button.getData('vinyl') == 'blue')
                 {
-                    vinylMusic = this.sound.add('blue', { loop: false });
-                    vinylMusic.play();
+                   vinylMusic = this.sound.add('blue', { loop: false });
+                   vinylMusic.play();
                 }
-                //if(button.getData('vinyl') == 'blue')
-                //{
-                //    blue = this.sound.add('blue', { loop: false });
-                //    blue.play();
-                //}
+                // else if(button.getData('vinyl') == 'mixedblueteal')
+                // {
+                //    vinylMusic = this.sound.add('mixedblueteal', { loop: false });
+                //    vinylMusic.play();
+                // }
+                else if(button.getData('vinyl') == 'mixedbluepink')
+                {
+                   vinylMusic = this.sound.add('mixedbluepink', { loop: false });
+                   vinylMusic.play();
+                }
+                else if(button.getData('vinyl') == 'broken')
+                {
+                   vinylMusic = this.sound.add('broken', { loop: false });
+                   vinylMusic.play();
+                }
+                // else if(button.getData('vinyl') == 'orange')
+                // {
+                //    vinylMusic = this.sound.add('orange', { loop: false });
+                //    vinylMusic.play();
+                // }
+                // else if(button.getData('vinyl') == 'green')
+                // {
+                //    vinylMusic = this.sound.add('green', { loop: false });
+                //    vinylMusic.play();
+                // }
+                else if(button.getData('vinyl') == 'mixedtealpurple')
+                {
+                   vinylMusic = this.sound.add('mixedtealpurple', { loop: false });
+                   vinylMusic.play();
+                }
             }
             else if(button.getData('playing') == true)
             {
