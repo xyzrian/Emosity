@@ -52,11 +52,12 @@ export default class Boot extends Phaser.Scene {
         this.load.image('logo', 'src/assets/logo.png' )
         this.load.image('house', 'src/assets/house.png');
 
-        this.load.tilemapTiledJSON('map', 'src/assets/testmap.json');
+        this.load.tilemapTiledJSON('map', 'src/assets/mapv1_1.json');
         this.load.image('grasstiles', 'src/assets/grasstileset.png');
-        this.load.spritesheet('records', 'src/assets/records.png', { frameWidth: 19, frameHeight: 12, startFrame: 0, endFrame: 9});
+        this.load.spritesheet('records', 'src/assets/records.png', { frameWidth: 19, frameHeight: 12, startFrame: 0, endFrame: 10});
         this.load.spritesheet('decor', 'src/assets/decor.png', { frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 9});
         this.load.image('walls', 'src/assets/wall.png');
+        this.load.image('ladders', 'src/assets/ladder.png');
 
         this.load.image('inventoryIcon', 'src/assets/inventoryIcon.png');
         this.load.spritesheet('buttons', 'src/assets/buttons.png', { frameWidth: 25, frameHeight: 25, startFrame: 0, endFrame: 1});
@@ -68,8 +69,17 @@ export default class Boot extends Phaser.Scene {
 
         this.load.spritesheet('enemies', 'src/assets/enemy.png', { frameWidth: 27, frameHeight: 30, startFrame: 0, endFrame: 1 });
 
-        this.load.audio('happyBirthday', ['src/assets/happyBirthday.mp3']);
-        this.load.audio('blue', ['src/assets/happyBirthday.mp3']);
+        this.load.audio('blackMusic', ['src/assets/LateAtNight.mp3']);
+        this.load.audio('redMusic', ['src/assets/ElevatorMusic.mp3']);
+        this.load.audio('yellowMusic', ['src/assets/ForestWalk.mp3']);
+        this.load.audio('blueMusic', ['src/assets/marimbamagic.mp3']);
+        this.load.audio('mixedbluetealMusic', ['src/assets/LateAtNight.mp3']);
+        this.load.audio('mixedbluepinkMusic', ['src/assets/MelodyOfNature.mp3']);
+        this.load.audio('brokenMusic', ['src/assets/Clown.mp3']);
+        this.load.audio('orangeMusic', ['src/assets/GoodFellow.mp3']);
+        this.load.audio('greenMusic', ['src/assets/GoodFellow.mp3']);
+        this.load.audio('mixedtealpurpleMusic', ['src/assets/happyBirthday.mp3']);
+
     }
       
     create ()
@@ -83,16 +93,15 @@ export default class Boot extends Phaser.Scene {
             duration: 1500,
         });
 
-        //Uncomment for intro scene
-        // this.input.on('pointerdown', function() {
-        //     this.cameras.main.fadeOut(1000, 0, 0, 0);
-        //     this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
-        //         this.scene.start('Intro');
-        //     })
-        // }, this);
+        this.input.on('pointerdown', () => {
+            this.cameras.main.fadeOut(1000, 0, 0, 0);
+            this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+                this.scene.start('Intro');
+            })
+        }, this);
 
-        this.input.on('pointerdown', function() {
-            this.scene.start('Game');
+        this.input.on('pointerdown', () => {
+            this.scene.start('Intro');
         }, this);
     }
 }
