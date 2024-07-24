@@ -11,7 +11,7 @@ export default class Boot extends Phaser.Scene {
                 files: [{
                     key: 'loading',
                     type: 'spritesheet',
-                    url: 'src/assets/loading.png',
+                    url: './src/assets/loading.png',
                     frameConfig: {
                         frameWidth: 84, 
                         frameHeight: 12
@@ -20,7 +20,7 @@ export default class Boot extends Phaser.Scene {
                 {
                     type: 'image',
                     key: 'logo',
-                    url: 'src/assets/logo.png'
+                    url: './src/assets/logo.png'
                 }]
             }
         });
@@ -52,7 +52,6 @@ export default class Boot extends Phaser.Scene {
         this.load.image('logo', 'src/assets/logo.png' )
         this.load.image('house', 'src/assets/house.png');
 
-        // this.load.tilemapTiledJSON('map', 'src/assets/testmap.json');
         this.load.tilemapTiledJSON('map', 'src/assets/mapv1_1.json');
         this.load.image('grasstiles', 'src/assets/grasstileset.png');
         this.load.spritesheet('records', 'src/assets/records.png', { frameWidth: 19, frameHeight: 12, startFrame: 0, endFrame: 10});
