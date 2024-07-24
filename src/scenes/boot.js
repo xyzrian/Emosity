@@ -11,7 +11,7 @@ export default class Boot extends Phaser.Scene {
                 files: [{
                     key: 'loading',
                     type: 'spritesheet',
-                    url: '../src/assets/loading.png',
+                    url: './src/assets/loading.png',
                     frameConfig: {
                         frameWidth: 84, 
                         frameHeight: 12
@@ -20,7 +20,7 @@ export default class Boot extends Phaser.Scene {
                 {
                     type: 'image',
                     key: 'logo',
-                    url: '../src/assets/logo.png'
+                    url: './src/assets/logo.png'
                 }]
             }
         });
