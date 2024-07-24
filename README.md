@@ -5,9 +5,15 @@ Made with Phaser 3 game engine, Tiled and Pixel Studio. Hosted on GitHub Pages! 
 
 Music credit:
 Forest Walk - Alexander Nakarada
+
 Local Forecast – Elevator - Kevin MacLeod
+
 Good Fellow - Komiku 
+
 Clown - Sakura Girl
+
 Melody of Nature - GoodBMusic
+
 Late at Night - Sakura Girl
+
 MARIMBAMagic - markohlson
