@@ -14,6 +14,7 @@ module.exports = {
   output: {
       //path
       path: path.resolve(__dirname, 'dist'),
+      publicPath:"/Emosity/",
 
       // file name
       filename: "bundle.js"
