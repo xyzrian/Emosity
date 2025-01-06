@@ -11,7 +11,7 @@ export default class Boot extends Phaser.Scene {
                 files: [{
                     key: 'loading',
                     type: 'spritesheet',
-                    url: './src/assets/loading.png',
+                    url: 'assets/loading.png',
                     frameConfig: {
                         frameWidth: 84, 
                         frameHeight: 12
@@ -20,7 +20,7 @@ export default class Boot extends Phaser.Scene {
                 {
                     type: 'image',
                     key: 'logo',
-                    url: './src/assets/logo.png'
+                    url: 'assets/logo.png'
                 }]
             }
         });
@@ -42,43 +42,43 @@ export default class Boot extends Phaser.Scene {
             loadingMessage.destroy();
         });
 
-        this.load.spritesheet('player', 'src/assets/player1.png', { frameWidth: 42, frameHeight: 76 }); 
-        this.load.image('playerIntro', 'src/assets/playerIntro.png');
-        this.load.image('blackBg', 'src/assets/blackBg.png');
-        this.load.image('sky', 'src/assets/sky.png');
-        this.load.image('cloudsLarge', 'src/assets/cloudsLarge.png');
-        this.load.image('cloudsMedium', 'src/assets/cloudsMedium.png');
-        this.load.image('cloudsSmall', 'src/assets/cloudsSmall.png');
-        this.load.image('logo', 'src/assets/logo.png' )
-        this.load.image('house', 'src/assets/house.png');
+        this.load.spritesheet('player', 'assets/player1.png', { frameWidth: 42, frameHeight: 76 }); 
+        this.load.image('playerIntro', 'assets/playerIntro.png');
+        this.load.image('blackBg', 'assets/blackBg.png');
+        this.load.image('sky', 'assets/sky.png');
+        this.load.image('cloudsLarge', 'assets/cloudsLarge.png');
+        this.load.image('cloudsMedium', 'assets/cloudsMedium.png');
+        this.load.image('cloudsSmall', 'assets/cloudsSmall.png');
+        this.load.image('logo', 'assets/logo.png' )
+        this.load.image('house', 'assets/house.png');
 
-        this.load.tilemapTiledJSON('map', 'src/assets/mapv1_1.json');
-        this.load.image('grasstiles', 'src/assets/grasstileset.png');
-        this.load.spritesheet('records', 'src/assets/records.png', { frameWidth: 19, frameHeight: 12, startFrame: 0, endFrame: 10});
-        this.load.spritesheet('decor', 'src/assets/decor.png', { frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 9});
-        this.load.image('walls', 'src/assets/wall.png');
-        this.load.image('ladders', 'src/assets/ladder.png');
+        this.load.tilemapTiledJSON('map', 'assets/mapv1_1.json');
+        this.load.image('grasstiles', 'assets/grasstileset.png');
+        this.load.spritesheet('records', 'assets/records.png', { frameWidth: 19, frameHeight: 12, startFrame: 0, endFrame: 10});
+        this.load.spritesheet('decor', 'assets/decor.png', { frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 9});
+        this.load.image('walls', 'assets/wall.png');
+        this.load.image('ladders', 'assets/ladder.png');
 
-        this.load.image('inventoryIcon', 'src/assets/inventoryIcon.png');
-        this.load.spritesheet('buttons', 'src/assets/buttons.png', { frameWidth: 25, frameHeight: 25, startFrame: 0, endFrame: 1});
+        this.load.image('inventoryIcon', 'assets/inventoryIcon.png');
+        this.load.spritesheet('buttons', 'assets/buttons.png', { frameWidth: 25, frameHeight: 25, startFrame: 0, endFrame: 1});
 
-        this.load.atlas('musicNotes', 'src/assets/musicNotes.png', 'src/assets/musicNotes.json');
-        this.load.atlas('deathParticles', 'src/assets/deathParticles.png', 'src/assets/deathParticles.json');
+        this.load.atlas('musicNotes', 'assets/musicNotes.png', 'assets/musicNotes.json');
+        this.load.atlas('deathParticles', 'assets/deathParticles.png', 'assets/deathParticles.json');
 
-        this.load.image('respawnButton', 'src/assets/respawnButton.png');
+        this.load.image('respawnButton', 'assets/respawnButton.png');
 
-        this.load.spritesheet('enemies', 'src/assets/enemy.png', { frameWidth: 27, frameHeight: 30, startFrame: 0, endFrame: 1 });
+        this.load.spritesheet('enemies', 'assets/enemy.png', { frameWidth: 27, frameHeight: 30, startFrame: 0, endFrame: 1 });
 
-        this.load.audio('blackMusic', ['src/assets/LateAtNight.mp3']);
-        this.load.audio('redMusic', ['src/assets/ElevatorMusic.mp3']);
-        this.load.audio('yellowMusic', ['src/assets/ForestWalk.mp3']);
-        this.load.audio('blueMusic', ['src/assets/marimbamagic.mp3']);
-        this.load.audio('mixedbluetealMusic', ['src/assets/LateAtNight.mp3']);
-        this.load.audio('mixedbluepinkMusic', ['src/assets/MelodyOfNature.mp3']);
-        this.load.audio('brokenMusic', ['src/assets/Clown.mp3']);
-        this.load.audio('orangeMusic', ['src/assets/GoodFellow.mp3']);
-        this.load.audio('greenMusic', ['src/assets/GoodFellow.mp3']);
-        this.load.audio('mixedtealpurpleMusic', ['src/assets/happyBirthday.mp3']);
+        this.load.audio('blackMusic', ['assets/LateAtNight.mp3']);
+        this.load.audio('redMusic', ['assets/ElevatorMusic.mp3']);
+        this.load.audio('yellowMusic', ['assets/ForestWalk.mp3']);
+        this.load.audio('blueMusic', ['assets/marimbamagic.mp3']);
+        this.load.audio('mixedbluetealMusic', ['assets/LateAtNight.mp3']);
+        this.load.audio('mixedbluepinkMusic', ['assets/MelodyOfNature.mp3']);
+        this.load.audio('brokenMusic', ['assets/Clown.mp3']);
+        this.load.audio('orangeMusic', ['assets/GoodFellow.mp3']);
+        this.load.audio('greenMusic', ['assets/GoodFellow.mp3']);
+        this.load.audio('mixedtealpurpleMusic', ['assets/happyBirthday.mp3']);
 
     }
       
