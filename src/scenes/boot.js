@@ -78,8 +78,9 @@ export default class Boot extends Phaser.Scene {
         this.load.audio('brokenMusic', ['assets/Clown.mp3']);
         this.load.audio('orangeMusic', ['assets/GoodFellow.mp3']);
         this.load.audio('greenMusic', ['assets/GoodFellow.mp3']);
-        this.load.audio('mixedtealpurpleMusic', ['assets/happyBirthday.mp3']);
+        this.load.audio('mixedtealpurpleMusic', ['assets/MELODICMETALCORE.mp3']);
 
+        this.load.bitmapFont('minogram_6x10', 'assets/minogram_6x10.png', 'assets/minogram_6x10.xml');
     }
       
     create ()

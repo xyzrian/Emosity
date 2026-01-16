@@ -8,9 +8,17 @@ const config = {
     title: "Emosity",
     version: "0.0.1",
     type: Phaser.AUTO,
-    pixelArt: true,
+    // pixelArt: true,
     width: 480,
     height: 270,
+    // resolution: window.devicePixelRatio || 1,
+    // antialias: false,
+    render: {
+        pixelArt: true,
+        antialias: true,
+        antialiasGL: true,
+        roundPixels: true
+    },
     scale: {
         mode: Phaser.Scale.ENVELOP,
         autoCenter: Phaser.Scale.CENTER_BOTH,

@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const webpack = require("webpack");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 
 module.exports = {
@@ -70,5 +71,13 @@ module.exports = {
                 { from: 'public/style.css', to: 'style.css' }
             ],
         }),
+        new CopyWebpackPlugin({
+            patterns: [
+                { 
+                    from: path.resolve(__dirname, '../src/assets'), 
+                    to: 'assets' 
+                }
+            ]
+        })
     ]
 };
