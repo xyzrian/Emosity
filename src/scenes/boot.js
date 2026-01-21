@@ -68,6 +68,8 @@ export default class Boot extends Phaser.Scene {
         this.load.image('respawnButton', 'assets/respawnButton.png');
 
         this.load.spritesheet('enemies', 'assets/enemy.png', { frameWidth: 27, frameHeight: 30, startFrame: 0, endFrame: 1 });
+        // this.load.spritesheet('enemies', 'assets/enemy.png', { frameWidth: 25, frameHeight: 34, startFrame: 0, endFrame: 1 });
+        // this.load.spritesheet('enemiesGreen', 'assets/enemyGreen.png', { frameWidth: 20, frameHeight: 29, startFrame: 0, endFrame: 1 });
 
         this.load.audio('blackMusic', ['assets/LateAtNight.mp3']);
         this.load.audio('redMusic', ['assets/ElevatorMusic.mp3']);

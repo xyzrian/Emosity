@@ -39,8 +39,6 @@ export default class Intro extends Phaser.Scene {
             "HELP ME GET MY VINYL BACK!"
         ]
 
-
-        // In intro.js create
         this.load.bitmapFont('minogram_6x10', 'assets/minogram_6x10.png', 'assets/minogram_6x10.xml');
         text = this.add.bitmapText(textX, textY, 'minogram_6x10', '', 16);
         

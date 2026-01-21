@@ -47,17 +47,7 @@ export default class Game extends Phaser.Scene {
 
     preload ()
     {
-        // this.sound.unlock();
-        // this.load.audio('black', ['src/assets/LateAtNight.mp3']);
-        // this.load.audio('red', ['src/assets/ElevatorMusic.mp3']);
-        // this.load.audio('yellow', ['src/assets/ForestWalk.mp3']);
-        // this.load.audio('blue', ['src/assets/marimbamagic.mp3']);
-        // this.load.audio('mixedblueteal', ['src/assets/LateAtNight.mp3']);
-        // this.load.audio('mixedbluepink', ['src/assets/MelodyOfNature.mp3']);
-        // this.load.audio('broken', ['src/assets/Clown.mp3']);
-        // this.load.audio('orange', ['src/assets/GoodFellow.mp3']);
-        // this.load.audio('green', ['src/assets/GoodFellow.mp3']);
-        // this.load.audio('mixedtealpurple', ['src/assets/happyBirthday.mp3']);
+
     }
       
     create ()
