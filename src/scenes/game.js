@@ -39,6 +39,10 @@ var cloudsSmall;
 var cloudsMedium;
 var cloudsLarge;
 
+var houseDoor;
+var playerAtHouseDoor = false;
+var spaceKey;
+
 
 export default class Game extends Phaser.Scene {
     constructor() {
@@ -159,6 +163,26 @@ export default class Game extends Phaser.Scene {
 
         map.createFromObjects('house', { key: 'house' });
 
+        spaceKey = this.input.keyboard.addKey(
+            Phaser.Input.Keyboard.KeyCodes.SPACE
+        );
+
+        const interactionObjects = map.getObjectLayer('interactions');
+
+        interactionObjects.objects.forEach(obj => {
+            if (obj.name === 'houseDoor') {
+                houseDoor = this.add.zone(
+                    obj.x + obj.width / 2,
+                    obj.y - obj.height / 2,
+                    obj.width,
+                    obj.height
+                );
+
+                this.physics.add.existing(houseDoor, true); // static body
+            }
+        });
+
+
         //Enemies instantiation using Enemy extended class
         enemyGroup = this.physics.add.group();
         enemyGroup.enableBody = true;
@@ -183,11 +207,22 @@ export default class Game extends Phaser.Scene {
         this.physics.add.collider(player, platforms);  
 
         this.physics.add.overlap(player, recordGroup, this.collectRecord, null, this);
-        this.physics.add.overlap(player, enemyGroup, this.playerDeath, null, this);
+        this.physics.add.overlap(player, enemyGroup, this.playerDeath, null, this)
+        
+        this.physics.add.overlap(
+            player,
+            houseDoor,
+            () => { playerAtHouseDoor = true; },
+            null,
+            this
+        );;
 
         //Camera instantiation
         this.cameras.main.setBounds(0, 0, gameWidth, gameHeight);
         this.cameras.main.startFollow(player);
+
+       
+
 
         //Inventory 
         inventoryIcon = this.add.sprite(windowWidth-25, 40, 'inventoryIcon').setInteractive().setScrollFactor(0, 0);
@@ -232,6 +267,25 @@ export default class Game extends Phaser.Scene {
         cloudsMedium.tilePositionX += 0.1;
         cloudsLarge.tilePositionX += 0.05;
         
+        
+
+        if (playerAtHouseDoor && Phaser.Input.Keyboard.JustDown(spaceKey)) {
+            this.cameras.main.fadeOut(300);
+
+            this.cameras.main.once(
+                Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+                () => {
+                    this.scene.start('HouseInterior', {
+                        spawnX: 120,
+                        spawnY: 200
+                    });
+                }
+            );
+
+        }
+
+        playerAtHouseDoor = false;
+
     }
 
     collectRecord(player, record) 
