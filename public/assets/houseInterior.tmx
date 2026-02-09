@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="3">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="26">
  <tileset firstgid="1" name="interiorTiles" tilewidth="32" tileheight="32" tilecount="15" columns="3">
   <image source="interiorTiles.png" width="96" height="160"/>
  </tileset>
- <layer id="1" name="platforms" width="30" height="20">
+ <layer id="4" name="platforms" width="30" height="20">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -24,9 +24,15 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3
 </data>
  </layer>
+ <objectgroup id="6" name="decor">
+  <object id="20" gid="14" x="192" y="608" width="32" height="32"/>
+  <object id="21" gid="11" x="192" y="576" width="32" height="32"/>
+  <object id="22" gid="4" x="224" y="608" width="32" height="32"/>
+  <object id="23" gid="5" x="256" y="608" width="32" height="32"/>
+ </objectgroup>
  <objectgroup id="2" name="spawns">
   <object id="1" name="playerSpawn" x="144.667" y="560.667">
    <point/>

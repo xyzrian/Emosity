@@ -3,8 +3,6 @@ import Player from './player.js';
 
 var interiorWidth = 29*32;
 var interiorHeight = 19*32;
-// var playerX = 200;
-// var playerY = interiorHeight-120;
 
 
 export default class HouseInterior extends Phaser.Scene {
@@ -13,6 +11,8 @@ export default class HouseInterior extends Phaser.Scene {
     }
 
     create(data) {
+
+        const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         
         // RESET CAMERA FADE
@@ -24,54 +24,103 @@ export default class HouseInterior extends Phaser.Scene {
 
         const map = this.make.tilemap({ key: 'houseInterior' });
 
-        const tileset = map.addTilesetImage(
-            'interiorTiles',
-            'interiorTiles'
-        );
+        const tileset = map.addTilesetImage('interior1','interior1');
+        const doorTiles = map.addTilesetImage('doors', 'doors');
+        const bedTiles = map.addTilesetImage('bed', 'bed');
+        const guitarTiles = map.addTilesetImage('guitar', 'guitar');
+
 
         const platforms = map.createLayer('platforms', tileset);
+        const ladders = map.createLayer('ladders', tileset);
         platforms.setCollisionByExclusion([-1]);
+        ladders.setCollisionByExclusion([-1]); // detect overlap
+    
 
         const spawnLayer = map.getObjectLayer('spawns');
         const spawn = spawnLayer.objects.find(o => o.name === 'playerSpawn');
 
-        const player = this.physics.add.existing(
+        this.player = this.physics.add.existing(
             new Player(this, spawn.x, spawn.y, 'player')
         );
 
-
-        player.setCollideWorldBounds(true);
-        this.physics.add.collider(player, platforms);
+        this.player.setCollideWorldBounds(true);
+        this.physics.add.collider(this.player, platforms);
 
         // Camera
-        this.cameras.main.startFollow(player);
+        this.cameras.main.startFollow(this.player);
         this.cameras.main.setBounds(
             0, 0,
             map.widthInPixels,
             map.heightInPixels
         );
 
+        const decor = map.createFromObjects('decor', [
+            { gid: bedTiles.firstgid, key: 'bed' },
+            { gid: guitarTiles.firstgid, key: 'guitar' },
+            // { gid: doorTiles.firstgid, key: 'doors' },
+        ]);
 
-        // // Exit door
-        // const exits = map.getObjectLayer('interactions');
-        // exits.objects.forEach(obj => {
-        //     if (obj.name === 'exitHouse') {
-        //         const exit = this.physics.add
-        //             .staticSprite(obj.x, obj.y, null)
-        //             .setSize(obj.width, obj.height)
-        //             .setOrigin(0, 1)
-        //             .setVisible(false);
 
-        //         this.physics.add.overlap(player, exit, () => {
-        //             if (
-        //                 Phaser.Input.Keyboard.JustDown(
-        //                     this.input.keyboard.addKey('SPACE')
-        //                 )
-        //             ) {
-        //                 this.scene.start('Game');
-        //             }
-        //         });
-        //     }
-        // });
+        const doorObjects = map.createFromObjects('doors', { key: 'doors' });
+
+        doorObjects.forEach(obj => {
+            this.physics.add.existing(obj, true);
+
+            if (obj.getData('locked') == true) {
+                obj.setTexture('doors', 1);
+                obj.setData('locked', true);
+            }
+            else if(obj.getData('locked') == false) {
+                obj.setTexture('doors', 0);
+                obj.setData('locked', false);
+            }
+    
+            this.physics.add.overlap(this.player, obj, () => {
+                if (!Phaser.Input.Keyboard.JustDown(spaceKey)) return;
+
+                if (obj.getData('locked')) {
+                    console.log("Door is locked");
+                    return;
+                }
+
+                this.scene.start('Game');
+            });
+        });
+
+        
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.isClimbing = false;
+
+        this.physics.add.overlap(this.player, this.ladders, () => {
+            this.isClimbing = true;
+            console.log("overlapping ladder");
+        });
+
+        
+    }
+
+    update() {
+        // Check if player is overlapping ladder
+        this.isClimbing = this.physics.overlap(this.player, this.ladders);
+
+
+        if (this.isClimbing) {
+            this.player.body.allowGravity = false;
+            this.player.setVelocityY(0);
+
+            if (this.cursors.up.isDown) {
+                this.player.setVelocityY(-120);
+            } else if (this.cursors.down.isDown) {
+                this.player.setVelocityY(120);
+            }
+        } else {
+            this.player.body.allowGravity = true;
+        }
+
+        // Add your horizontal movement from Player here if needed
+        this.player.update(this.cursors);
+
+        // Reset climbing each frame
+        // this.isClimbing = false;
     }
 }
