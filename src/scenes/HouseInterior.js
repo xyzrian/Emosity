@@ -5,6 +5,7 @@ var interiorWidth = 29*32;
 var interiorHeight = 19*32;
 
 
+
 export default class HouseInterior extends Phaser.Scene {
     constructor() {
         super('HouseInterior');
@@ -31,9 +32,14 @@ export default class HouseInterior extends Phaser.Scene {
 
 
         const platforms = map.createLayer('platforms', tileset);
-        const ladders = map.createLayer('ladders', tileset);
+        this.ladders = map.createLayer('ladders', tileset);
         platforms.setCollisionByExclusion([-1]);
-        ladders.setCollisionByExclusion([-1]); // detect overlap
+        // ladders.setCollisionByExclusion([-1]); // detect overlap
+
+        // platforms.setCollisionByProperty({ collides: true });
+
+    
+
     
 
         const spawnLayer = map.getObjectLayer('spawns');
@@ -91,36 +97,58 @@ export default class HouseInterior extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
         this.isClimbing = false;
 
-        this.physics.add.overlap(this.player, this.ladders, () => {
-            this.isClimbing = true;
-            console.log("overlapping ladder");
-        });
+        // this.physics.add.overlap(this.player, this.ladders, () => {
+        //     this.isClimbing = true;
+        // });
 
         
     }
 
     update() {
-        // Check if player is overlapping ladder
-        this.isClimbing = this.physics.overlap(this.player, this.ladders);
+        const player = this.player;
+        const cursors = this.cursors;
 
+        // Get tile directly under player's center
+        const tile = this.ladders.getTileAtWorldXY(
+            player.x,
+            player.y + player.height / 2
+        );
 
-        if (this.isClimbing) {
-            this.player.body.allowGravity = false;
-            this.player.setVelocityY(0);
+        const onLadder = tile !== null;
 
-            if (this.cursors.up.isDown) {
-                this.player.setVelocityY(-120);
-            } else if (this.cursors.down.isDown) {
-                this.player.setVelocityY(120);
-            }
-        } else {
-            this.player.body.allowGravity = true;
+        // ENTER ladder state
+        if (onLadder && (cursors.up.isDown || cursors.down.isDown)) {
+            this.isClimbing = true;
         }
 
-        // Add your horizontal movement from Player here if needed
-        this.player.update(this.cursors);
+        // EXIT ladder state
+        if (!onLadder) {
+            this.isClimbing = false;
+            player.body.setAllowGravity(true);
+        }
 
-        // Reset climbing each frame
-        // this.isClimbing = false;
+        // CLIMBING LOGIC
+        if (this.isClimbing) {
+            player.body.setAllowGravity(false);
+
+            // allow passing upward through platform
+            player.body.checkCollision.up = false;
+            player.body.checkCollision.down = false;
+
+            player.setVelocityX(0);
+
+            if (cursors.up.isDown) player.setVelocityY(-100);
+            else if (cursors.down.isDown) player.setVelocityY(100);
+            else player.setVelocityY(0);
+        }
+        else {
+            player.body.setAllowGravity(true);
+
+            // restore normal collision
+            player.body.checkCollision.up = true;
+            player.body.checkCollision.down = true;
+        }
+
     }
+
 }
