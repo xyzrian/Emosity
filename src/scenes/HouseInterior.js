@@ -30,7 +30,7 @@ export default class HouseInterior extends Phaser.Scene {
         const paintingTiles = map.addTilesetImage('paintings', 'paintings');
         
 
-
+        const windows = map.createLayer('windows', tileset);
         const platforms = map.createLayer('platforms', tileset);
         const walls = map.createLayer('walls', tileset);
         walls.setCollisionByExclusion([-1]);
