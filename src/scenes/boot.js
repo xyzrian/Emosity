@@ -52,18 +52,13 @@ export default class Boot extends Phaser.Scene {
         this.load.image('logo', 'assets/logo.png' )
         this.load.image('house', 'assets/house.png');
 
-        // this.load.tilemapTiledJSON('map', 'assets/mapv1_1.json');
         this.load.tilemapTiledJSON('map', 'assets/mapv1_67.json');
-        this.load.tilemapTiledJSON('houseInterior','assets/houseInterior.json');
-        // this.load.image('interiorTiles', 'assets/interiorTiles.png');
-        this.load.image('interior1', 'assets/interior1.png');
+        this.load.tilemapTiledJSON('house','assets/house.json');
+        this.load.image('interior', 'assets/interior2.png');
         this.load.spritesheet('doors', 'assets/doors.png', { frameWidth: 33, frameHeight: 61, startFrame: 0, endFrame: 1 });
         this.load.image('guitar', 'assets/guitar.png');
         this.load.image('bed', 'assets/bed.png');
-
-
-
-
+        this.load.image('paintings', 'assets/paintings.png');
 
         this.load.image('grasstiles', 'assets/grasstileset.png');
         this.load.spritesheet('records', 'assets/records.png', { frameWidth: 19, frameHeight: 12, startFrame: 0, endFrame: 10});
@@ -80,8 +75,6 @@ export default class Boot extends Phaser.Scene {
         this.load.image('respawnButton', 'assets/respawnButton.png');
 
         this.load.spritesheet('enemies', 'assets/enemy.png', { frameWidth: 27, frameHeight: 30, startFrame: 0, endFrame: 1 });
-        // this.load.spritesheet('enemies', 'assets/enemy.png', { frameWidth: 25, frameHeight: 34, startFrame: 0, endFrame: 1 });
-        // this.load.spritesheet('enemiesGreen', 'assets/enemyGreen.png', { frameWidth: 20, frameHeight: 29, startFrame: 0, endFrame: 1 });
 
         this.load.audio('blackMusic', ['assets/LateAtNight.mp3']);
         this.load.audio('redMusic', ['assets/ElevatorMusic.mp3']);

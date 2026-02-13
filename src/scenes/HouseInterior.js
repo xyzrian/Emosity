@@ -23,24 +23,22 @@ export default class HouseInterior extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, interiorWidth, interiorHeight, true, false, false, true);  // left/right/top/bottom
         this.add.tileSprite(0, interiorHeight, interiorWidth, interiorHeight,'sky').setOrigin(0, 1);
 
-        const map = this.make.tilemap({ key: 'houseInterior' });
+        const map = this.make.tilemap({ key: 'house' });
 
-        const tileset = map.addTilesetImage('interior1','interior1');
+        const tileset = map.addTilesetImage('interior','interior');
         const doorTiles = map.addTilesetImage('doors', 'doors');
         const bedTiles = map.addTilesetImage('bed', 'bed');
         const guitarTiles = map.addTilesetImage('guitar', 'guitar');
+        const paintingTiles = map.addTilesetImage('paintings', 'paintings');
+        
 
 
         const platforms = map.createLayer('platforms', tileset);
+        const walls = map.createLayer('walls', tileset);
+        walls.setCollisionByExclusion([-1]);
         this.ladders = map.createLayer('ladders', tileset);
         platforms.setCollisionByExclusion([-1]);
-        // ladders.setCollisionByExclusion([-1]); // detect overlap
 
-        // platforms.setCollisionByProperty({ collides: true });
-
-    
-
-    
 
         const spawnLayer = map.getObjectLayer('spawns');
         const spawn = spawnLayer.objects.find(o => o.name === 'playerSpawn');
@@ -51,6 +49,9 @@ export default class HouseInterior extends Phaser.Scene {
 
         this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, platforms);
+        this.physics.add.collider(this.player, walls);
+
+        this.player.setDepth(10);
 
         // Camera
         this.cameras.main.startFollow(this.player);
@@ -63,8 +64,9 @@ export default class HouseInterior extends Phaser.Scene {
         const decor = map.createFromObjects('decor', [
             { gid: bedTiles.firstgid, key: 'bed' },
             { gid: guitarTiles.firstgid, key: 'guitar' },
-            // { gid: doorTiles.firstgid, key: 'doors' },
+            { gid: paintingTiles.firstgid, key: 'paintings' }
         ]);
+        
 
 
         const doorObjects = map.createFromObjects('doors', { key: 'doors' });
@@ -96,11 +98,6 @@ export default class HouseInterior extends Phaser.Scene {
         
         this.cursors = this.input.keyboard.createCursorKeys();
         this.isClimbing = false;
-
-        // this.physics.add.overlap(this.player, this.ladders, () => {
-        //     this.isClimbing = true;
-        // });
-
         
     }
 
