@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
 import Player from './player.js';
 
-var interiorWidth = 29*32;
-var interiorHeight = 19*32;
+var interiorWidth = 20*32;
+var interiorHeight = 10*32;
 
 
 
@@ -12,16 +12,14 @@ export default class HouseInterior extends Phaser.Scene {
     }
 
     create(data) {
-
         const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        
         // RESET CAMERA FADE
         this.cameras.main.fadeIn(300, 0, 0, 0);
         
         //World bounds
         this.physics.world.setBounds(0, 0, interiorWidth, interiorHeight, true, false, false, true);  // left/right/top/bottom
-        this.add.tileSprite(0, interiorHeight, interiorWidth, interiorHeight,'sky').setOrigin(0, 1);
+        this.add.tileSprite(0, interiorHeight, interiorWidth, interiorHeight,'houseBackground').setOrigin(0, 1);
 
         const map = this.make.tilemap({ key: 'house' });
 

@@ -54,6 +54,7 @@ export default class Boot extends Phaser.Scene {
 
         this.load.tilemapTiledJSON('map', 'assets/mapv1_67.json');
         this.load.tilemapTiledJSON('house','assets/house.json');
+        this.load.image('houseBackground', 'assets/houseBackground.png');
         this.load.image('interior', 'assets/interior2.png');
         this.load.spritesheet('doors', 'assets/doors.png', { frameWidth: 33, frameHeight: 61, startFrame: 0, endFrame: 1 });
         this.load.image('guitar', 'assets/guitar.png');
